@@ -29,6 +29,13 @@ public class TacheController {
      */
     @PostMapping("/create")
     public ResponseEntity<String> creerTache(@RequestBody TacheDto tacheDto) {
+        // Vérification du nom de la tâche
+        if (tacheDto.getNom() == null || tacheDto.getNom().isEmpty()) {
+            throw new IllegalArgumentException("Le nom de la tâche est obligatoire");
+        }
+        if (tacheDto.getNom().length() > 60) {
+            throw new IllegalArgumentException("Le nom de la tâche est trop long");
+        }
         tacheService.creerTache(tacheDto);
         return ResponseEntity.ok("Tâche créée avec succès");
     }

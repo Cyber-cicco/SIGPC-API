@@ -15,7 +15,7 @@ public class Tache {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nom", nullable = false)
+    @Column(name = "nom", nullable = false, length = 60)
     private String nom;
 
     @Column(name = "description", nullable = true)
