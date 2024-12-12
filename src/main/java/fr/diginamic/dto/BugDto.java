@@ -10,4 +10,5 @@ import lombok.*;
 public class BugDto {
     private Long id;
     private String descrption;
+
 }

@@ -18,4 +18,8 @@ public class Bug {
     private String description;
     @Enumerated
     private SeveriteEnum severite;
+
+    @ManyToOne
+    @JoinColumn(name = "user_story_id")
+    private UserStory userStory;
 }

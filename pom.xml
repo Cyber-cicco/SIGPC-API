@@ -19,6 +19,13 @@
     </properties>
     <dependencies>
 
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>6.2.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -57,11 +64,14 @@
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.36</version>
+            <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -89,6 +99,7 @@
             <artifactId>jjwt-api</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
@@ -147,10 +158,10 @@
                 </property>
             </activation>
             <properties>
-                <jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
-                <jdbc.url>jdbc:mariadb://localhost:3306/sigpc</jdbc.url>
-                <jdbc.user>sigpc-user</jdbc.user>
-                <jdbc.pass>Sigpc1234!</jdbc.pass>
+                <jdbc.driver>org.mariadb.jdbc.Driver</jdbc.driver>
+                <jdbc.url>jdbc:mariadb://localhost:3307/sigpc</jdbc.url>
+                <jdbc.user>root</jdbc.user>
+                <jdbc.pass>pazo1928!</jdbc.pass>
                 <jdbc.dialect>org.hibernate.dialect.MariaDBDialect</jdbc.dialect>
                 <spring.log-level>DEBUG</spring.log-level>
             </properties>

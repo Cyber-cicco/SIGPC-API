@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: @jdbc.url@
+    username: @jdbc.user@
+    password: @jdbc.pass@
+    driver-class-name: @jdbc.driver@
+  jpa:
+    show-sql: false
+    database: mysql
+    generate-ddl: true
+
+  servlet:
+    multipart:
+      max-file-size: "10MB"
+      max-request-size: "10MB"
+logging:
+  level:
+    org.springframework: @spring.log-level@
+  file:
+    path: "~/logs.txt"
+jwt:
+  cookie: "AUTH-TOKEN"
+  expires_in: 864000
+  secret: "3dDsYHtBkTz0gAoPmPMwL2ksjVfVyR2Js0OsaVTx3RobUGI6YGM3gWJRFhPG"
+
+brevo:
+  enabled: true
+  url: https://api.brevo.com/v3/smtp/email
+  key: ${BREVO_API_KEY}
