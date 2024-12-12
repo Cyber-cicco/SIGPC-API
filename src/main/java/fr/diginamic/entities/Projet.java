@@ -1,16 +1,15 @@
 package fr.diginamic.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Builder;
-import lombok.NoArgsConstructor;    
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 public class Projet {
@@ -38,6 +37,9 @@ public class Projet {
     private List<Sprint> sprint;
     @OneToMany(mappedBy = "projet")
     private List<Ressource> ressources;
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Utilisateur admin;
     @OneToMany(mappedBy = "projet")
     private List<ProjetUtilisateur> projetUtilisateurs;
 

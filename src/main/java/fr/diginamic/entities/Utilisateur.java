@@ -1,17 +1,15 @@
 package fr.diginamic.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 public class Utilisateur {
@@ -31,11 +29,11 @@ public class Utilisateur {
     private List<Invitation> invitation;
     @OneToMany(mappedBy = "utilisateur")
     private List<Reaction> reactions;
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "admin")
     private List<Projet> projets;
     @OneToMany(mappedBy = "utilisateur")
-    private List<Utilisateur> commentaires;
-    @OneToMany(mappedBy = "utilisateur")
+    private List<Commentaire> commentaires;
+    @OneToMany(mappedBy = "admin")
     private List<Equipe> equipes;
 
 
