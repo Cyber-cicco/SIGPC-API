@@ -3,7 +3,6 @@ package fr.diginamic.dto;
 
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Tache;
-import fr.diginamic.dto.TacheDto;
 
 @Component
 public class TacheTransformer {

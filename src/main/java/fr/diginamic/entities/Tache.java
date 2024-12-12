@@ -11,15 +11,22 @@ import lombok.*;
 @Builder
 public class Tache {
 
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;      
+    private Long id;
+
+    @Column(name = "nom", nullable = false)
     private String nom;
+
+    @Column(name = "description", nullable = true)
     private String description;
+
+    // Par défaut, la tâche n'est pas terminée
+    @Column(name = "done", nullable = false, columnDefinition = "boolean default false")
     private boolean done;
+
     @ManyToOne
     @JoinColumn(name = "userStory_id")
     private UserStory userStory;
-
 
 }
