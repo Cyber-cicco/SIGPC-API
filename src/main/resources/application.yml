@@ -27,3 +27,8 @@ brevo:
   enabled: true
   url: https://api.brevo.com/v3/smtp/email
   key: ${BREVO_API_KEY}
+
+server:
+  port: 8090
+#  servlet:
+#    context-path: /api/v1
