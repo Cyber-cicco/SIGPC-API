@@ -3,7 +3,6 @@ package fr.diginamic.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import fr.diginamic.entities.Utilisateur;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -11,6 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -63,10 +63,10 @@ public class JwtService {
         ObjectMapper objectMapper = new ObjectMapper();
         String jetonJWT = null;
         try {
-            JSONObject obj = new JSONObject(user.getRoles());
+            JSONArray obj = new JSONArray(user.getRoles());
             jetonJWT = Jwts.builder()
                     .setSubject(user.getEmail())
-                    .addClaims(Map.of("role",  objectMapper.writeValueAsString(obj.getJSONArray("").toList()
+                    .addClaims(Map.of("role",  objectMapper.writeValueAsString(obj.toList()
                     )))
                     .addClaims(Map.of("id", user.getId()))
                     .setExpiration(new Date(System.currentTimeMillis() + getExpireIn() * 1000))

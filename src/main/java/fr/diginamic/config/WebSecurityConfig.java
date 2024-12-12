@@ -2,11 +2,7 @@ package fr.diginamic.config;
 
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.http2.Http2Protocol;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -34,24 +30,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    @Value("${prod.url}")
-    private String produrl;
+    /**
+     * Permet de gérer la suppression du cookie lorsque l'utilisateur se déconnecte
+     */
     private final CustomLogoutHandler customLogoutHandler;
+
+    /**
+     * Bean permettant de hasher le mot de passe dans les services d'authentification
+     * @return le bean
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configure la sécurité pour l'application
+     *
+     * @param http outil permettant de configurer les middlewares
+     * @param jwtAuthenticationFilter middleware custom permettant de créer une session à partir du cookie jwt
+     * @param mvc utilitaire permettant de gérer le matching des routes
+     * @param configurationSource bean permettant de gérer les CORS
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter, MvcRequestMatcher.Builder mvc, @Qualifier(value = "corsConfigurationSource") CorsConfigurationSource configurationSource) throws Exception{
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(mvc.pattern("login" )).permitAll()
-                        .requestMatchers(mvc.pattern("/" )).permitAll()
-                        .requestMatchers(mvc.pattern("img/**")).permitAll()
-                        .requestMatchers(mvc.pattern("js/**")).permitAll()
-                        .requestMatchers(mvc.pattern("styles/**")).permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable
                 )
@@ -68,10 +75,16 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+    /**
+     * Configure  les CORS pour accepter les requêtes depuis localhost
+     * TODO: Changer cela si l'on souhaite ajouter un front
+     * @return
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(produrl, "http://localhost", "//localhost"));
+        configuration.setAllowedOrigins(List.of("http://localhost", "//localhost"));
         configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS", "PUT", "DELETE", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-XSRF-TOKEN"));
         configuration.setAllowCredentials(true);
@@ -81,17 +94,16 @@ public class WebSecurityConfig {
         return source;
     }
 
+    /**
+     * Permet de gérer le matching des routes et de les sécuriser
+     * @param introspector object contenant des informations sur les routes de l'application
+     * @return
+     */
     @Scope("prototype")
     @Bean
     public MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector){
         return new MvcRequestMatcher.Builder(introspector);
     }
 
-    @Bean
-    public ConfigurableServletWebServerFactory tomcatCustomizer() {
-        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        factory.addConnectorCustomizers(connector -> connector.addUpgradeProtocol(new Http2Protocol()));
-        return factory;
-    }
 
 }

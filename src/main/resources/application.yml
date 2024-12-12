@@ -8,6 +8,8 @@ spring:
     show-sql: false
     database: mysql
     generate-ddl: true
+  brevo:
+    key: @brevo.api-key@
 
   servlet:
     multipart:
@@ -23,7 +25,3 @@ jwt:
   expires_in: 864000
   secret: "3dDsYHtBkTz0gAoPmPMwL2ksjVfVyR2Js0OsaVTx3RobUGI6YGM3gWJRFhPG"
 
-brevo:
-  enabled: true
-  url: https://api.brevo.com/v3/smtp/email
-  key: ${BREVO_API_KEY}

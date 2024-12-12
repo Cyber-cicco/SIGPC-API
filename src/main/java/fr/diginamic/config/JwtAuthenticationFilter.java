@@ -30,6 +30,16 @@ import java.util.stream.Stream;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+
+    /**
+     * Filtre permettant de créer une session si le cookie contenant le JWT est valide
+     * TODO : changer si l'on veut gérer l'authentification via le header
+     * @param req la requête
+     * @param res la réponse
+     * @param chain la chaine de middleware
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
         if (req.getCookies() != null && Arrays.stream(req.getCookies()).anyMatch(cookie -> cookie.getName().equals(jwtService.getCookie()))) {
