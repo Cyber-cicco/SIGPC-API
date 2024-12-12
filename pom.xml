@@ -81,6 +81,13 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <dependency>
             <groupId>jakarta.validation</groupId>

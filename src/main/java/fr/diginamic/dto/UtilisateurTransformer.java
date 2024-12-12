@@ -3,7 +3,6 @@ package fr.diginamic.dto;
 
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Utilisateur;
-import fr.diginamic.dto.UtilisateurDto;
 
 @Component
 public class UtilisateurTransformer {
@@ -14,7 +13,7 @@ public class UtilisateurTransformer {
         dto.setEmail(entity.getEmail());
         dto.setNom(entity.getNom());
         dto.setPrenom(entity.getPrenom());
-        dto.setEmail_verified(entity.isEmail_verified());
+        dto.setEmailVerified(entity.isEmailVerified());
         dto.setRoles(entity.getRoles());
         dto.setDateEcheanceSuppression(entity.getDateEcheanceSuppression());
 
@@ -28,7 +27,7 @@ public class UtilisateurTransformer {
         entity.setEmail(dto.getEmail());
         entity.setNom(dto.getNom());
         entity.setPrenom(dto.getPrenom());
-        entity.setEmail_verified(dto.isEmail_verified());
+        entity.setEmailVerified(dto.isEmailVerified());
         entity.setRoles(dto.getRoles());
         entity.setDateEcheanceSuppression(dto.getDateEcheanceSuppression());
 
