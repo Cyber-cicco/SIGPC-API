@@ -17,7 +17,7 @@ public class UtilisateurDto {
     private String email;
     private String nom;
     private String prenom;
-    private boolean email_verified;
+    private boolean emailVerified;
     private String roles;
     private LocalDateTime dateEcheanceSuppression;
     private TentativeSupressionMdpDto tentativeSuppresionMdp;

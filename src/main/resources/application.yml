@@ -8,6 +8,8 @@ spring:
     show-sql: false
     database: mysql
     generate-ddl: true
+  brevo:
+    key: @brevo.api-key@
 
   servlet:
     multipart:

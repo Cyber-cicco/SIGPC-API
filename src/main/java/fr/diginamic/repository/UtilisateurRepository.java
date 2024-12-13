@@ -6,5 +6,7 @@ import java.util.Optional;
 import fr.diginamic.entities.Utilisateur;
 
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>  {
+    Boolean existsByEmail(String email);
+    void deleteUtilisateurByEmail(String email);
 
 }
