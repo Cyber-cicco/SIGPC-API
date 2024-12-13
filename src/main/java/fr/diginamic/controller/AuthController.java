@@ -11,10 +11,9 @@ import fr.diginamic.shared.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,5 +61,16 @@ public class AuthController {
         return ResponseEntity.status(200)
                 .header(HttpHeaders.SET_COOKIE, jwt)
                 .body(utilisateurTransformer.toutilisateurDto(utilisateur));
+    }
+
+    /**
+     * Permet de vérifier le mail d'un utilisateur
+     * @param uuid identifiant du lien
+     * @return une réponse indiquant la réussite de l'opération
+     */
+    @GetMapping("/email/verify/{uuid}")
+    public ResponseEntity<?> verfiyEmail(@PathVariable("uuid") String uuid) {
+        utilisateurService.activateAccount(uuid);
+        return ResponseEntity.ok(Map.of("message", "activation réussie"));
     }
 }

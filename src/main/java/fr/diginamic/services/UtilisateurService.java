@@ -129,4 +129,18 @@ public class UtilisateurService {
         }
         return utilisateur;
     }
+
+    /**
+     * Permet de vérfier le mail de l'utilisateur
+     * Ne fonctionne que si l'uuid est valide
+     * @param uuid identifiant du lien pour l'activation
+     */
+    @Transactional
+    public void activateAccount(String uuid) {
+        var link = UUID.fromString(uuid);
+        var utilisateur = utilisateurRepository.findByActivationLink(link)
+                .orElseThrow(EntityNotFoundException::new);
+        utilisateur.setEmailVerified(true);
+        utilisateurRepository.save(utilisateur);
+    }
 }

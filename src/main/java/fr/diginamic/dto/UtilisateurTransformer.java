@@ -30,6 +30,7 @@ public class UtilisateurTransformer {
         UtilisateurDto dto = new UtilisateurDto();
         dto.setId(entity.getId());
         dto.setEmail(entity.getEmail());
+        dto.setActivationLink(entity.getActivationLink().toString());
         dto.setNom(entity.getNom());
         dto.setPrenom(entity.getPrenom());
         dto.setEmailVerified(entity.isEmailVerified());
