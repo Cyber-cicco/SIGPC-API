@@ -61,6 +61,13 @@ public class EquipeController {
         }
     }
 
+    /**
+     * Permet d'accepter une invitation
+     * @param token le jwt
+     * @param groupId l'identifiant du groupe
+     * @param accepted indique si l'invitation a été acceptée ou refusée
+     * @return un message en fonction du status d'acceptation de l'invitation
+     */
     @PatchMapping("/{groupId}/invite/member/{accepted}")
     public ResponseEntity<?> accepteInvitation(
             @CookieValue("AUTH-TOKEN") String token,
