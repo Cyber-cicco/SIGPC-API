@@ -36,6 +36,11 @@ public class TacheController {
         if (tacheDto.getNom().length() > 60) {
             throw new IllegalArgumentException("Le nom de la tâche est trop long");
         }
+        // Vérification du userStoryId
+        if (tacheDto.getUserStory() == null) {
+            throw new IllegalArgumentException("L'ID de l'user story est obligatoire");
+        }
+        // Création de la tâche
         tacheService.creerTache(tacheDto);
         return ResponseEntity.ok("Tâche créée avec succès");
     }
