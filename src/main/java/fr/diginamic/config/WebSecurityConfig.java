@@ -60,6 +60,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
                         .requestMatchers(mvc.pattern("api/v1/auth/login")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**")).permitAll()
                         .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request")).permitAll()
                         .requestMatchers(mvc.pattern("api/v1/auth/password/change/**")).permitAll()
                         .requestMatchers(mvc.pattern("api/v1/equipes/**")).authenticated()

@@ -95,4 +95,15 @@ public class AuthController {
         utilisateurService.changePassword(uuid, passwordChangeDto);
         return ResponseEntity.ok(Map.of("message", "success"));
     }
+
+    /**
+     * Permet de vérifier le mail d'un utilisateur
+     * @param uuid identifiant du lien
+     * @return une réponse indiquant la réussite de l'opération
+     */
+    @GetMapping("/email/verify/{uuid}")
+    public ResponseEntity<?> verfiyEmail(@PathVariable("uuid") String uuid) {
+        utilisateurService.activateAccount(uuid);
+        return ResponseEntity.ok(Map.of("message", "activation réussie"));
+    }
 }

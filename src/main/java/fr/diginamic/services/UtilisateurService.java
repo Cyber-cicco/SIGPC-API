@@ -46,7 +46,7 @@ public class UtilisateurService {
      * @throws ValidationException
      * @throws JsonProcessingException
      */
-    public Utilisateur createAccount(CompteDto compteDto) throws ValidationException, JsonProcessingException {
+    public Utilisateur createAccount(@Valid CompteDto compteDto) throws ValidationException, JsonProcessingException {
         validateAccount(compteDto);
         String password = encoder.encode(compteDto.getPassword());
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
@@ -72,6 +72,15 @@ public class UtilisateurService {
 
     }
 
+    /**
+     * Méthode pour vérfier que le mot de passe répond aux contraintes suivantes:
+     *  - possède un caractère en minuscule
+     *  - possède un caractère en majuscule
+     *  - possède un chiffre
+     *  - possède un caractère spécial
+     * @param password la chaine à vérifier
+     * @throws ValidationException
+     */
     private void validatePassword(String password) throws ValidationException {
         boolean hasUpperCase = false;
         boolean hasLowerCase = false;
@@ -135,6 +144,21 @@ public class UtilisateurService {
         return utilisateur;
     }
 
+    /**
+     * Permet de vérfier le mail de l'utilisateur
+     * Ne fonctionne que si l'uuid est valide
+     * @param uuid identifiant du lien pour l'activation
+     */
+    @Transactional
+    public void activateAccount(String uuid) {
+        var link = UUID.fromString(uuid);
+        var utilisateur = utilisateurRepository.findByActivationLink(link)
+                .orElseThrow(EntityNotFoundException::new);
+        utilisateur.setEmailVerified(true);
+        utilisateur.setActivationLink(null);
+        utilisateurRepository.save(utilisateur);
+    }
+  
     /**
      * Change le mot de passe de l'utilisateur ayant effectué une demande
      * @param uuid l'identifiant de la demande
