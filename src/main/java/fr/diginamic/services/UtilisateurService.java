@@ -67,6 +67,15 @@ public class UtilisateurService {
 
     }
 
+    /**
+     * Méthode pour vérfier que le mot de passe répond aux contraintes suivantes:
+     *  - possède un caractère en minuscule
+     *  - possède un caractère en majuscule
+     *  - possède un chiffre
+     *  - possède un caractère spécial
+     * @param password la chaine à vérifier
+     * @throws ValidationException
+     */
     private void validatePassword(String password) throws ValidationException {
         boolean hasUpperCase = false;
         boolean hasLowerCase = false;
