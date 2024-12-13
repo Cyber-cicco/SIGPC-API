@@ -2,14 +2,9 @@ package fr.diginamic.dto;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import fr.diginamic.entities.enums.RoleEnum;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Utilisateur;
 
-import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -26,7 +21,7 @@ public class UtilisateurTransformer {
                 .emailVerified(false)
                 .build();
     }
-    public UtilisateurDto toutilisateurDto(Utilisateur entity){
+    public UtilisateurDto toUtilisateurDto(Utilisateur entity){
         UtilisateurDto dto = new UtilisateurDto();
         dto.setId(entity.getId());
         dto.setEmail(entity.getEmail());

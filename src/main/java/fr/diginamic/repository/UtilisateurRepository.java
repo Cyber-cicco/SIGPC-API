@@ -11,7 +11,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     Boolean existsByEmail(String email);
     void deleteUtilisateurByEmail(String email);
     Optional<Utilisateur> findUtilisateurByEmail(String email);
-
     Optional<Utilisateur> findByActivationLink(UUID link);
+    Optional<Utilisateur> findUtilisateurByEmailAndEmailVerified(String email, Boolean verfied);
 
 }

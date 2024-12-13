@@ -21,7 +21,7 @@ public class InvitationDto {
     private boolean acceptee;
     private LocalDateTime dateAcceptation;
     private TypeInvitationEnum typeInvitation;
-    private UtilisateurDto utilisateur;
-    private EquipeDto equipe;
+    private Long utilisateurId;
+    private Long equipeId;
 
 }
