@@ -3,6 +3,7 @@ package fr.diginamic.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.diginamic.config.JwtService;
 import fr.diginamic.dto.CompteDto;
+import fr.diginamic.dto.LoginDto;
 import fr.diginamic.dto.UtilisateurTransformer;
 import fr.diginamic.services.MailService;
 import fr.diginamic.services.UtilisateurService;
@@ -46,5 +47,20 @@ public class AuthController {
             utilisateurService.deleteAccount(utilisateur.getEmail());
             return ResponseEntity.status(500).body(new ErrorMessage("Erreur lors de l'envoie du mail de confirmation. Votre compte n'a pas pu être créé"));
         }
+    }
+
+    /**
+     * Permet de s'authentifier. Renvoie une réponse avec un cookie contenant
+     * le token d'authentification
+     * @param loginDto les informations de login
+     * @return la réponse
+     */
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+        var utilisateur = utilisateurService.login(loginDto);
+        var jwt = jwtService.buildJWTCookie(utilisateur);
+        return ResponseEntity.status(200)
+                .header(HttpHeaders.SET_COOKIE, jwt)
+                .body(utilisateurTransformer.toutilisateurDto(utilisateur));
     }
 }

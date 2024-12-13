@@ -59,6 +59,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/auth/login")).permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable
                 )

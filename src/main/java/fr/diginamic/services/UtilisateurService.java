@@ -3,9 +3,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.diginamic.dto.CompteDto;
+import fr.diginamic.dto.LoginDto;
 import fr.diginamic.entities.Utilisateur;
 import fr.diginamic.entities.enums.RoleEnum;
+import fr.diginamic.exception.UnauthorizedException;
 import fr.diginamic.utils.ValidationUtils;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
@@ -109,5 +112,21 @@ public class UtilisateurService {
     @Transactional
     public void deleteAccount(String email) {
         utilisateurRepository.deleteUtilisateurByEmail(email);
+    }
+
+    /**
+     * Méthode permettant de vérifier l'identité d'un utilisateur en fonction d'un couple
+     * email / mot de passe
+     * @param loginDto les informations de login
+     * @return les informations de l'utilisateur
+     * @throws EntityNotFoundException
+     */
+    public Utilisateur login(@Valid LoginDto loginDto) throws EntityNotFoundException {
+        var utilisateur = utilisateurRepository.findUtilisateurByEmail(loginDto.getEmail())
+                .orElseThrow(EntityNotFoundException::new);
+        if (!encoder.matches(loginDto.getPassword(), utilisateur.getPassword())) {
+            throw new UnauthorizedException();
+        }
+        return utilisateur;
     }
 }
