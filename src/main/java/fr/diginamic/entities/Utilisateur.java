@@ -42,6 +42,8 @@ public class Utilisateur {
     private List<Commentaire> commentaires;
     @OneToMany(mappedBy = "admin")
     private List<Equipe> equipes;
+    @OneToMany(mappedBy = "utilisateur")
+    private List<EquipeUtilisateur> equipeUtilisateurs;
 
 
 }
