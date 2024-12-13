@@ -10,4 +10,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     void deleteUtilisateurByEmail(String email);
     Optional<Utilisateur> findUtilisateurByEmail(String email);
 
+    Optional<Utilisateur> findUtilisateurByEmailAndEmailVerified(String email, Boolean verfied);
+
 }

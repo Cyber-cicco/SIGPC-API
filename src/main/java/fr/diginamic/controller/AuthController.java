@@ -1,9 +1,11 @@
 package fr.diginamic.controller;
 
+import brevo.ApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.diginamic.config.JwtService;
 import fr.diginamic.dto.CompteDto;
 import fr.diginamic.dto.LoginDto;
+import fr.diginamic.dto.PasswordChangeDto;
 import fr.diginamic.dto.UtilisateurTransformer;
 import fr.diginamic.services.MailService;
 import fr.diginamic.services.UtilisateurService;
@@ -11,10 +13,9 @@ import fr.diginamic.shared.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,5 +63,31 @@ public class AuthController {
         return ResponseEntity.status(200)
                 .header(HttpHeaders.SET_COOKIE, jwt)
                 .body(utilisateurTransformer.toutilisateurDto(utilisateur));
+    }
+
+    /**
+     * Permet d'envoyer un email de récupération de mot de passe à l'email précisé
+     * @param loginDto l'objet contenant l'email
+     * @return une réponse contenant le lien d'activation en tant que chaine de caractère
+     * @throws ApiException
+     */
+    @PostMapping("/password-change/send-request")
+    public ResponseEntity<?> createNewPasswordChangeAttempt(@RequestBody LoginDto loginDto) throws ApiException {
+        var askMdp = utilisateurService.createNewPasswordChangeAttempt(loginDto);
+        mailService.sendPasswordChangeEmail(askMdp.tentativeSupressionMdp(), askMdp.email());
+        return ResponseEntity.ok(Map.of("message", askMdp.tentativeSupressionMdp().getLink().toString()));
+    }
+
+    /**
+     * Permet de changer le mot de passe
+     * @param uuid l'identifiant unique de la tentative de changement de mot de passe
+     * @param passwordChangeDto object contenant le mot de passe et sa confirmation
+     * @return une réponse indiquant la réussite de la transaction
+     * @throws ApiException
+     */
+    @PostMapping("/password/change/{uuid}")
+    public ResponseEntity<?> changePassword(@PathVariable("uuid") String uuid, @RequestBody PasswordChangeDto passwordChangeDto) throws ApiException {
+        utilisateurService.changePassword(uuid, passwordChangeDto);
+        return ResponseEntity.ok(Map.of("message", "success"));
     }
 }

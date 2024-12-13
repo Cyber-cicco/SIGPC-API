@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.diginamic.dto.CompteDto;
 import fr.diginamic.dto.LoginDto;
+import fr.diginamic.dto.PasswordChangeDto;
+import fr.diginamic.entities.TentativeSupressionMdp;
 import fr.diginamic.entities.Utilisateur;
 import fr.diginamic.entities.enums.RoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
+import fr.diginamic.repository.TentativeSupressionMdpRepository;
 import fr.diginamic.utils.ValidationUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -19,6 +22,7 @@ import fr.diginamic.repository.UtilisateurRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +32,7 @@ import java.util.UUID;
 public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
+    private final TentativeSupressionMdpRepository tentativeSupressionMdpRepository;
     private final UtilisateurTransformer utilisateurTransformer;
     private final ValidationUtils validationUtils;
     private final PasswordEncoder encoder;
@@ -128,5 +133,57 @@ public class UtilisateurService {
             throw new UnauthorizedException();
         }
         return utilisateur;
+    }
+
+    /**
+     * Change le mot de passe de l'utilisateur ayant effectué une demande
+     * @param uuid l'identifiant de la demande
+     * @param passwordChangeDto l'objet contenant le mot de passe
+     * @throws ValidationException
+     */
+    @Transactional
+    public void changePassword(String uuid, @Valid PasswordChangeDto passwordChangeDto) throws ValidationException {
+        // Récupération de la tentative, et levée d'erreur si non trouvée
+        var link = UUID.fromString(uuid);
+        var passwordChange = tentativeSupressionMdpRepository.findByLinkAndActiveUntilAfter(link, LocalDateTime.now())
+                .orElseThrow(EntityNotFoundException::new);
+
+        validationUtils.throwIfTrue(!passwordChangeDto.getPassword().equals(passwordChangeDto.getPasswordConf()), ValidationUtils.PASSWORD_CONF_NO_MATCH);
+        validatePassword(passwordChangeDto.getPassword());
+        var utilisateur = passwordChange.getUtilisateur();
+        if (utilisateur == null) {
+            throw new EntityNotFoundException("User was not supposed to be null");
+        }
+        utilisateur.setPassword(encoder.encode(passwordChangeDto.getPassword()));
+        utilisateurRepository.save(utilisateur);
+        tentativeSupressionMdpRepository.delete(passwordChange);
+    }
+
+    /**
+     * Type contenant le mail auquel envoyé le lien ainsi que le lien
+     * @param email le mail de l'utilisateur
+     * @param tentativeSupressionMdp l'objet représentant la tentative de changement de mot de passe
+     */
+    public record PasswordInfos(String email, TentativeSupressionMdp tentativeSupressionMdp){}
+
+    /**
+     * Permet d'ajouter une demande de tentative de récupération de mot de passe
+     * @param loginDto l'object contenant le mail
+     * @return le lien du mail et l'object créé en base
+     */
+    @Transactional
+    public PasswordInfos createNewPasswordChangeAttempt(LoginDto loginDto) {
+        var utilisateur = utilisateurRepository.findUtilisateurByEmailAndEmailVerified(loginDto.getEmail(), true)
+                .orElseThrow(EntityNotFoundException::new);
+        var tentativeSuppressionMDP = TentativeSupressionMdp.builder()
+                .activeUntil(LocalDateTime.now().plusDays(7))
+                .date(LocalDateTime.now())
+                .utilisateur(utilisateur)
+                .link(UUID.randomUUID())
+                .build();
+        return new PasswordInfos(
+                utilisateur.getEmail(),
+                tentativeSupressionMdpRepository.save(tentativeSuppressionMDP)
+        );
     }
 }

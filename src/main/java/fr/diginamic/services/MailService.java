@@ -8,6 +8,7 @@ import brevoApi.TransactionalEmailsApi;
 import brevoModel.CreateSmtpEmail;
 import brevoModel.SendSmtpEmail;
 import brevoModel.SendSmtpEmailTo;
+import fr.diginamic.entities.TentativeSupressionMdp;
 import fr.diginamic.entities.Utilisateur;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -28,19 +30,40 @@ public class MailService {
      * @throws ApiException
      */
     public void sendVerificationEmail(Utilisateur utilisateur) throws ApiException {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-        ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
-        apiKey.setApiKey(brevoApiKey);
-
-        TransactionalEmailsApi apiInstance = new TransactionalEmailsApi();
+        setDefaultClient();
         var params = new HashMap<String, String>();
         params.put("lien", utilisateur.getActivationLink().toString());
         SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
         sendSmtpEmail.templateId(3L);
-        sendSmtpEmail.to(List.of(new SendSmtpEmailTo().email(utilisateur.getEmail())));
+        sendEmail(sendSmtpEmail, utilisateur.getEmail(), params);
+    }
+
+    /**
+     * Méthode utilitaire pour envoyer l'email
+     * @param sendSmtpEmail objet de configuration pour l'envoie du mmail
+     * @param email destination
+     * @param params paramètres à envoyer à Brevo
+     * @throws ApiException
+     */
+    private void sendEmail(SendSmtpEmail sendSmtpEmail, String email, Map<String, String> params) throws ApiException {
+        TransactionalEmailsApi apiInstance = new TransactionalEmailsApi();
+        sendSmtpEmail.to(List.of(new SendSmtpEmailTo().email(email)));
         sendSmtpEmail.params(params);
-        CreateSmtpEmail result = apiInstance.sendTransacEmail(sendSmtpEmail);
-        System.out.println(result);
+        apiInstance.sendTransacEmail(sendSmtpEmail);
+    }
+
+    private void setDefaultClient() {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        ApiKeyAuth apiKey = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
+        apiKey.setApiKey(brevoApiKey);
+    }
+
+    public void sendPasswordChangeEmail(TentativeSupressionMdp tentativeSupressionMdp, String email) throws ApiException {
+        setDefaultClient();
+        var params = new HashMap<String, String>();
+        params.put("lien", tentativeSupressionMdp.getLink().toString());
+        SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+        sendSmtpEmail.templateId(3L);
+        sendEmail(sendSmtpEmail, email, params);
     }
 }
