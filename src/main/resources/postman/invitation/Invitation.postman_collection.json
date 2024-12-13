@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "9a26f3a2-1aac-4384-a3a4-79e89e7a5b2b",
+		"name": "Invitation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38326782"
+	},
+	"item": [
+		{
+			"name": "Invitation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"abelcoli@outlook.fr\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipes/3/invite",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"equipes",
+						"3",
+						"invite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
