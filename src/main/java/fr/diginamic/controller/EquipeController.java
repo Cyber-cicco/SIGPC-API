@@ -11,7 +11,7 @@ import fr.diginamic.services.EquipeService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/equipe")
+@RequestMapping("/api/v1/equipes")
 public class EquipeController {
 
 

@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipe",
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipes",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{domainName}}"
@@ -29,7 +29,7 @@
 					"port": "{{port}}",
 					"path": [
 						"{{apiVersion}}",
-						"equipe"
+						"equipes"
 					]
 				}
 			},
@@ -50,7 +50,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipe",
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipes",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{domainName}}"
@@ -58,7 +58,7 @@
 					"port": "{{port}}",
 					"path": [
 						"{{apiVersion}}",
-						"equipe"
+						"equipes"
 					]
 				}
 			},
@@ -79,7 +79,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipe",
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipes",
 					"protocol": "{{schema}}",
 					"host": [
 						"{{domainName}}"
@@ -87,7 +87,7 @@
 					"port": "{{port}}",
 					"path": [
 						"{{apiVersion}}",
-						"equipe"
+						"equipes"
 					]
 				}
 			},
