@@ -3,14 +3,14 @@ package fr.diginamic.entities;
 import fr.diginamic.dto.EquipeDto;
 import fr.diginamic.entities.enums.EquipeRoleEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
+@Builder
 public class EquipeUtilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

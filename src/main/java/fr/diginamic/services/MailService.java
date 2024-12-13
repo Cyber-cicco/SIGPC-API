@@ -8,6 +8,7 @@ import brevoApi.TransactionalEmailsApi;
 import brevoModel.CreateSmtpEmail;
 import brevoModel.SendSmtpEmail;
 import brevoModel.SendSmtpEmailTo;
+import fr.diginamic.dto.SimpleInvitationDto;
 import fr.diginamic.entities.TentativeSupressionMdp;
 import fr.diginamic.entities.Utilisateur;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +64,16 @@ public class MailService {
         var params = new HashMap<String, String>();
         params.put("lien", tentativeSupressionMdp.getLink().toString());
         SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
-        sendSmtpEmail.templateId(3L);
+        sendSmtpEmail.templateId(5L);
         sendEmail(sendSmtpEmail, email, params);
+    }
+
+    public void sendInvitation(SimpleInvitationDto invitationDto) throws ApiException {
+        setDefaultClient();
+        SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+        sendSmtpEmail.templateId(6L);
+        TransactionalEmailsApi apiInstance = new TransactionalEmailsApi();
+        sendSmtpEmail.to(List.of(new SendSmtpEmailTo().email(invitationDto.getEmail())));
+        apiInstance.sendTransacEmail(sendSmtpEmail);
     }
 }
