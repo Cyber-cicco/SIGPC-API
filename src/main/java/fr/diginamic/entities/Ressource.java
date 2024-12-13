@@ -13,13 +13,19 @@ public class Ressource {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;      
-    private String nom;
-    private String lien;
-    private String lienMedia;
-    @ManyToOne
-    @JoinColumn(name = "projet_id")
-    private Projet projet;
+    private Long id;
 
+    @Column(nullable = true)
+    private String nom;
+
+    @Column(nullable = true)
+    private String lien;
+
+    @Column(nullable = true)
+    private String lienMedia;
+
+    @ManyToOne
+    @JoinColumn(name = "projet_id", nullable = false)
+    private Projet projet;
 
 }
