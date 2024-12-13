@@ -13,19 +13,27 @@ import java.util.List;
 @Builder
 public class Equipe {
 
-    @Id()
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;      
+    private Long id;
+
+    @Column(nullable = false)
     private String nom;
+
+    @Column(nullable = true)
     private String contact;
+
+    @Column(nullable = true)
     private String description;
+
     @OneToMany(mappedBy = "equipe")
     private List<Projet> projets;
+
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Utilisateur admin;
+
     @OneToMany(mappedBy = "equipe")
     private List<Invitation> invitations;
-
 
 }
