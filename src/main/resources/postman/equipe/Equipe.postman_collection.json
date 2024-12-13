@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "59d10e6d-318a-4e8a-ab60-ff9ed56920a2",
+		"name": "Equipe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38326782"
+	},
+	"item": [
+		{
+			"name": "Create equipe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nom\": \"La team roquette\",\n    \"contact\" : \"abelcoli@outlook.fr\",\n    \"description\" : \"boom!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipe",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"equipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create equipe invalid 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nom\": \"La team roquette\",\n    \"contact\" : \"abelcoli-outlook.fr\",\n    \"description\" : \"boom!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipe",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"equipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create equipe invalid 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nom\": \"La team roquette\",\n    \"contact\" : \"abelcoli@outlook.fr\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipe",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"equipe"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
