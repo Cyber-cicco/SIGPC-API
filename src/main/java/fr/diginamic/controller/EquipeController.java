@@ -99,4 +99,19 @@ public class EquipeController {
         return ResponseEntity.ok(new RoleEquipeDto(utilisateurEquipe.getRole()));
     }
 
+    /**
+     * Envoie une demande d'appartenance à un groupe
+     * @param token le jwt
+     * @param groupId le groupe auquel l'utilisateur souhaite appartenir
+     * @return un message indiquant que la demande a été faite
+     * @throws ApiException
+     */
+    @PostMapping("/{groupId}/join")
+    public ResponseEntity<?> askToJoinGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId) throws ApiException {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        var emails = equipeService.addJoinGroupDemand(userInfos, groupId);
+        mailService.sendDemandeAppartenance(emails.senderEmail(), emails.recipientEmail());
+        return ResponseEntity.ok(Map.of("message", "La demande a été envoyée"));
+    }
+
 }

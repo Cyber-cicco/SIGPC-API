@@ -89,7 +89,7 @@ public class EquipeService {
      */
     @Transactional
     public void accepteInvite(AuthenticationInfos userInfos, Long groupId, Boolean accepted) {
-        var invitation = invitationRepository.findFirstByUtilisateur_IdAndEquipe_IdOrderByDateEmissionDesc(userInfos.getId(), groupId)
+        var invitation = invitationRepository.findFirstByUtilisateur_IdAndEquipe_IdAndTypeInvitationOrderByDateEmissionDesc(userInfos.getId(), groupId, TypeInvitationEnum.DEMANDE_EQUIPE)
                 .orElseThrow(EntityNotFoundException::new);
         if (LocalDateTime.now().isAfter(invitation.getDateEmission().plusDays(7))) {
             throw new ValidationException("L'invitation a expiré");
@@ -126,5 +126,28 @@ public class EquipeService {
         }
         equipeUtilisateur.setRole(roleEquipeDto.getRole());
         return equipeUtilisateurRepository.save(equipeUtilisateur);
+    }
+
+    public record DemandeAjoutEquipe(String senderEmail, String recipientEmail){}
+
+    /**
+     * Permet d'ajouter une demande d'appartenance à un groupe
+     * @param userInfos les informations de l'utilisateur connecté
+     * @param groupId le groupe qu'il souhaite rejoindre
+     * @return l'email de l'administrateur
+     */
+    public DemandeAjoutEquipe addJoinGroupDemand(AuthenticationInfos userInfos, Long groupId) {
+        var utilisateur = utilisateurRepository.getReferenceById(userInfos.getId());
+        var group = equipeRepository.findById(groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        var invitation = Invitation.builder()
+                .dateEmission(LocalDateTime.now())
+                .acceptee(false)
+                .equipe(group)
+                .utilisateur(utilisateur)
+                .typeInvitation(TypeInvitationEnum.DEMANDE_UTILISATEUR)
+                .build();
+        invitationRepository.save(invitation);
+        return new DemandeAjoutEquipe(utilisateur.getEmail(), group.getAdmin().getEmail());
     }
 }
