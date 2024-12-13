@@ -1,5 +1,6 @@
 package fr.diginamic.services;
 import fr.diginamic.dto.EquipeTransformer;
+import fr.diginamic.dto.RoleEquipeDto;
 import fr.diginamic.dto.SimpleInvitationDto;
 import fr.diginamic.entities.Equipe;
 import fr.diginamic.entities.EquipeUtilisateur;
@@ -109,5 +110,24 @@ public class EquipeService {
                     .build();
             equipeUtilisateurRepository.save(equipeUtilisateur);
         }
+    }
+
+    /**
+     * Permet de changer le rôle d'un utilisateur non propriétaire
+     * @param memberId membre dont on veut changer le rôle
+     * @param groupId équipe auquelle le membre appartient
+     * @param roleEquipeDto rôle que l'on souhaite assigner au membre
+     */
+    public EquipeUtilisateur changeRole(Long memberId, Long groupId, RoleEquipeDto roleEquipeDto) {
+        var equipeUtilisateur = equipeUtilisateurRepository.findByUtilisateur_IdAndEquipe_Id(memberId, groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        if (equipeUtilisateur.getRole().equals(EquipeRoleEnum.PROPRIETAIRE)) {
+            throw new ValidationException("Vous ne pouvez changer le rôle d'un propriétaire");
+        }
+        if (equipeUtilisateur.getRole().equals(roleEquipeDto.getRole())) {
+            throw new ValidationException("L'utilisateur possède déjà ce rôle");
+        }
+        equipeUtilisateur.setRole(roleEquipeDto.getRole());
+        return equipeUtilisateurRepository.save(equipeUtilisateur);
     }
 }

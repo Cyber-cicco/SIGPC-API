@@ -1,6 +1,7 @@
 package fr.diginamic.services;
 
 import fr.diginamic.config.JwtService;
+import fr.diginamic.entities.enums.EquipeRoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
 import fr.diginamic.repository.EquipeUtilisateurRepository;
 import fr.diginamic.shared.AuthenticationInfos;
@@ -24,6 +25,18 @@ public class SecurityService {
 
     public void checkIfUserAllowedInGroup(Long utilisateurId, Long groupId) {
         var exists = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_Id(utilisateurId, groupId);
+        if (!exists) {
+            throw new UnauthorizedException();
+        }
+    }
+
+    /**
+     * Renvoie une exception dans le cas où l'utilisateur n'est pas propriétaire du groupe
+     * @param userInfos les informations de l'utilisateur connecté
+     * @param groupId l'indentifiant du groupe auquel il est rattaché
+     */
+    public void checkIfUserProprietaireInGroup(AuthenticationInfos userInfos, Long groupId) {
+        var exists = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_IdAndRole(userInfos.getId(), groupId, EquipeRoleEnum.PROPRIETAIRE);
         if (!exists) {
             throw new UnauthorizedException();
         }

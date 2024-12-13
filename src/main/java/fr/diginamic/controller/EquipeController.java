@@ -3,7 +3,7 @@ package fr.diginamic.controller;
 import brevo.ApiException;
 import fr.diginamic.dto.EquipeDto;
 import fr.diginamic.dto.EquipeTransformer;
-import fr.diginamic.dto.InvitationDto;
+import fr.diginamic.dto.RoleEquipeDto;
 import fr.diginamic.dto.SimpleInvitationDto;
 import fr.diginamic.entities.Equipe;
 import fr.diginamic.services.MailService;
@@ -76,7 +76,27 @@ public class EquipeController {
             ) {
         var userInfos = securityService.getAuthenticationInfos(token);
         equipeService.accepteInvite(userInfos, groupId, accepted);
-        return ResponseEntity.ok(Map.of("message", accepted ? "Vous avez bien été ajouté dans le groupe" : "L'invitation a correctement été refusée"));
+        return ResponseEntity.ok(Map.of("message", accepted ?
+                "Vous avez bien été ajouté dans le groupe"
+                :
+                "L'invitation a correctement été refusée"));
+    }
+
+    /**
+     * Permet de changer le rôle d'un utilisateur dans une équipe dont
+     * on est le propriétaire
+     * @param token jwt
+     * @param groupId identifiant du groupe visé
+     * @param memberId identifiant de l'utilisateur visé
+     * @param roleEquipeDto rôle que l'on souhaite assigner
+     * @return
+     */
+    @PatchMapping("/{groupId}/member/{memberId}/role")
+    public ResponseEntity<?> changeRoleOfMember(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody RoleEquipeDto roleEquipeDto) {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        securityService.checkIfUserProprietaireInGroup(userInfos, groupId);
+        var utilisateurEquipe = equipeService.changeRole(memberId, groupId, roleEquipeDto);
+        return ResponseEntity.ok(new RoleEquipeDto(utilisateurEquipe.getRole()));
     }
 
 }

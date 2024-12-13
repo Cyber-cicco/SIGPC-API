@@ -92,6 +92,38 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Change role",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/3/member/2/role",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"3",
+						"member",
+						"2",
+						"role"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
