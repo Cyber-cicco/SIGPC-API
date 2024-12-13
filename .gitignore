@@ -6,3 +6,6 @@
 jpa
 target
 templates
+
+# Logs
+*.log
