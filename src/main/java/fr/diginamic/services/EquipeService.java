@@ -65,4 +65,8 @@ public class EquipeService {
                 .build();
         invitationRepository.save(invitation);
     }
+
+    public void removeInvite(SimpleInvitationDto invitationDto, Long groupId) {
+        invitationRepository.deleteByUtilisateur_EmailAndEquipe_Id(invitationDto.getEmail(), groupId);
+    }
 }

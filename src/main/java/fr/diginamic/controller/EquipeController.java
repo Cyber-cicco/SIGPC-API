@@ -34,11 +34,15 @@ public class EquipeController {
     }
 
     @PostMapping("/{groupId}/invite")
-    public ResponseEntity<?> postInvite(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody SimpleInvitationDto invitationDto) throws ApiException {
+    public ResponseEntity<?> postInvite(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody SimpleInvitationDto invitationDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
         equipeService.postInvite(invitationDto, groupId, userInfos);
-        mailService.sendInvitation(invitationDto);
+        try {
+            mailService.sendInvitation(invitationDto);
+        } catch (ApiException e) {
+            equipeService.removeInvite(invitationDto, groupId);
+        }
         return ResponseEntity.ok(Map.of("message", "invite sent"));
     }
 
