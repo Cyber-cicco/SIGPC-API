@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Validated
@@ -72,7 +72,42 @@ public class EquipeService {
         invitationRepository.save(invitation);
     }
 
+    /**
+     * Permet de supprimer une invitation lorsqu'une erreur d'envoie de mail se produit
+     * @param invitationDto les informations de l'invitation
+     * @param groupId l'identifiant du groupe de l'invitation
+     */
     public void removeInvite(SimpleInvitationDto invitationDto, Long groupId) {
         invitationRepository.deleteByUtilisateur_EmailAndEquipe_Id(invitationDto.getEmail(), groupId);
+    }
+
+    /**
+     * Permet d'accepter ou de refuser une invitation
+     * @param userInfos les informations de l'utilisateur connecté
+     * @param groupId l'identifiant du groupe qu'il souhaite rejoindre
+     * @param accepted indique s'il accepte ou refuse l'invitation
+     */
+    @Transactional
+    public void accepteInvite(AuthenticationInfos userInfos, Long groupId, Boolean accepted) {
+        var invitation = invitationRepository.findFirstByUtilisateur_IdAndEquipe_IdOrderByDateEmissionDesc(userInfos.getId(), groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        if (LocalDateTime.now().isAfter(invitation.getDateEmission().plusDays(7))) {
+            throw new ValidationException("L'invitation a expiré");
+        }
+        invitation.setAcceptee(accepted);
+        invitation.setDateAcceptation(LocalDateTime.now());
+        invitationRepository.save(invitation);
+        if (accepted) {
+            var utilisateur = utilisateurRepository.findById(userInfos.getId())
+                    .orElseThrow(EntityNotFoundException::new);
+            var equipe = equipeRepository.findById(groupId)
+                    .orElseThrow(EntityNotFoundException::new);
+            var equipeUtilisateur = EquipeUtilisateur.builder()
+                    .utilisateur(utilisateur)
+                    .equipe(equipe)
+                    .role(EquipeRoleEnum.MEMBRE)
+                    .build();
+            equipeUtilisateurRepository.save(equipeUtilisateur);
+        }
     }
 }

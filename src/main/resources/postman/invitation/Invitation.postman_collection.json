@@ -36,6 +36,14 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Accept",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }

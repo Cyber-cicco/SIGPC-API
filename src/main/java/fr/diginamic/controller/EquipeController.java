@@ -48,7 +48,7 @@ public class EquipeController {
      * @return un message indiquant la réussite de l'opération
      */
     @PostMapping("/{groupId}/invite")
-    public ResponseEntity<?> postInvite(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody SimpleInvitationDto invitationDto) {
+    public ResponseEntity<?> postInvitation(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody SimpleInvitationDto invitationDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
         equipeService.postInvite(invitationDto, groupId, userInfos);
@@ -59,6 +59,17 @@ public class EquipeController {
             equipeService.removeInvite(invitationDto, groupId);
             return ResponseEntity.ok(Map.of("message", "L'invitation n'a pas aboutis à cause d'un problème lié à l'envoie de mail."));
         }
+    }
+
+    @PatchMapping("/{groupId}/invite/member/{accepted}")
+    public ResponseEntity<?> accepteInvitation(
+            @CookieValue("AUTH-TOKEN") String token,
+            @PathVariable Long groupId,
+            @PathVariable Boolean accepted
+            ) {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        equipeService.accepteInvite(userInfos, groupId, accepted);
+        return ResponseEntity.ok(Map.of("message", accepted ? "Vous avez bien été ajouté dans le groupe" : "L'invitation a correctement été refusée"));
     }
 
 }

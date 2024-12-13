@@ -51,7 +51,7 @@ public class WebSecurityConfig {
      * @param jwtAuthenticationFilter middleware custom permettant de créer une session à partir du cookie jwt
      * @param mvc utilitaire permettant de gérer le matching des routes
      * @param configurationSource bean permettant de gérer les CORS
-     * @return
+     * @return la filter chain
      * @throws Exception
      */
     @Bean
