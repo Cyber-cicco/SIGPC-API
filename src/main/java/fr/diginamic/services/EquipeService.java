@@ -33,6 +33,12 @@ public class EquipeService {
     private final EquipeTransformer equipeTransformer;
     private final UtilisateurRepository utilisateurRepository;
 
+    /**
+     * Permet d'ajouter une équipe
+     * @param userInfos les informations de l'utilisateur connecté
+     * @param equipeDto les informations de la nouvelle équipe (validée)
+     * @return la nouvelle équipe
+     */
     public Equipe postNewEquipe(AuthenticationInfos userInfos, @Valid EquipeDto equipeDto) {
         var utilisateur = utilisateurRepository.findById(userInfos.getId())
                 .orElseThrow(EntityNotFoundException::new);
