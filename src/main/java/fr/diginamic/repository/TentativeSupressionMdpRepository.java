@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import fr.diginamic.entities.TentativeSupressionMdp;
+import fr.diginamic.entities.TentativeChangementMdp;
 
-public interface TentativeSupressionMdpRepository extends JpaRepository<TentativeSupressionMdp, Long>  {
-    Optional<TentativeSupressionMdp> findByLinkAndActiveUntilAfter(UUID link, LocalDateTime now);
+public interface TentativeSupressionMdpRepository extends JpaRepository<TentativeChangementMdp, Long>  {
+    Optional<TentativeChangementMdp> findByLinkAndActiveUntilAfter(UUID link, LocalDateTime now);
 }

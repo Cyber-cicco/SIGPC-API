@@ -24,6 +24,7 @@ public class SecurityService {
     }
 
     public void checkIfUserAllowedInGroup(Long utilisateurId, Long groupId) {
+        // TODO : ajouter un cache pour savoir s'il l'utilisateur a les droits (une hashmap)
         var exists = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_Id(utilisateurId, groupId);
         if (!exists) {
             throw new UnauthorizedException();

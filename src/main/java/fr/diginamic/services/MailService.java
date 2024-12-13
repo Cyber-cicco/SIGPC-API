@@ -5,11 +5,10 @@ import brevo.ApiException;
 import brevo.Configuration;
 import brevo.auth.ApiKeyAuth;
 import brevoApi.TransactionalEmailsApi;
-import brevoModel.CreateSmtpEmail;
 import brevoModel.SendSmtpEmail;
 import brevoModel.SendSmtpEmailTo;
 import fr.diginamic.dto.SimpleInvitationDto;
-import fr.diginamic.entities.TentativeSupressionMdp;
+import fr.diginamic.entities.TentativeChangementMdp;
 import fr.diginamic.entities.Utilisateur;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,10 +58,10 @@ public class MailService {
         apiKey.setApiKey(brevoApiKey);
     }
 
-    public void sendPasswordChangeEmail(TentativeSupressionMdp tentativeSupressionMdp, String email) throws ApiException {
+    public void sendPasswordChangeEmail(TentativeChangementMdp tentativeChangementMdp, String email) throws ApiException {
         setDefaultClient();
         var params = new HashMap<String, String>();
-        params.put("lien", tentativeSupressionMdp.getLink().toString());
+        params.put("lien", tentativeChangementMdp.getLink().toString());
         SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
         sendSmtpEmail.templateId(5L);
         sendEmail(sendSmtpEmail, email, params);

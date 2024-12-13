@@ -2,13 +2,12 @@ package fr.diginamic.dto;
 
 
 import org.springframework.stereotype.Component;
-import fr.diginamic.entities.TentativeSupressionMdp;
-import fr.diginamic.dto.TentativeSupressionMdpDto;
+import fr.diginamic.entities.TentativeChangementMdp;
 
 @Component
 public class TentativeSupressionMdpTransformer {
 
-    public TentativeSupressionMdpDto totentativeSupressionMdpDto(TentativeSupressionMdp entity){
+    public TentativeSupressionMdpDto totentativeSupressionMdpDto(TentativeChangementMdp entity){
         TentativeSupressionMdpDto dto = new TentativeSupressionMdpDto();
         dto.setId(entity.getId());
         dto.setDate(entity.getDate());
@@ -19,8 +18,8 @@ public class TentativeSupressionMdpTransformer {
         return dto;
     }      
 
-    public TentativeSupressionMdp totentativeSupressionMdp(TentativeSupressionMdpDto dto){
-        TentativeSupressionMdp entity = new TentativeSupressionMdp();
+    public TentativeChangementMdp totentativeSupressionMdp(TentativeSupressionMdpDto dto){
+        TentativeChangementMdp entity = new TentativeChangementMdp();
         entity.setId(dto.getId());
         entity.setDate(dto.getDate());
         entity.setLink(dto.getLink());

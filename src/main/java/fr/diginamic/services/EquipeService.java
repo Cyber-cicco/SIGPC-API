@@ -61,13 +61,12 @@ public class EquipeService {
         }
         var utilisateur = utilisateurRepository.findUtilisateurByEmail(invitationDto.getEmail())
                 .orElseThrow(EntityNotFoundException::new);
-        var group = equipeRepository.findById(groupId)
-                .orElseThrow(EntityNotFoundException::new);
+        var group = equipeRepository.getReferenceById(groupId);
         var invitation = Invitation.builder()
                 .utilisateur(utilisateur)
                 .equipe(group)
                 .typeInvitation(TypeInvitationEnum.DEMANDE_EQUIPE)
-                .acceptee(false)
+                .acceptee(false) // TODO : changer pour un enum
                 .dateEmission(LocalDateTime.now())
                 .build();
         invitationRepository.save(invitation);
@@ -95,14 +94,12 @@ public class EquipeService {
         if (LocalDateTime.now().isAfter(invitation.getDateEmission().plusDays(7))) {
             throw new ValidationException("L'invitation a expiré");
         }
-        invitation.setAcceptee(accepted);
+        invitation.setAcceptee(accepted); // TODO : changer par un enum
         invitation.setDateAcceptation(LocalDateTime.now());
         invitationRepository.save(invitation);
         if (accepted) {
-            var utilisateur = utilisateurRepository.findById(userInfos.getId())
-                    .orElseThrow(EntityNotFoundException::new);
-            var equipe = equipeRepository.findById(groupId)
-                    .orElseThrow(EntityNotFoundException::new);
+            var utilisateur = utilisateurRepository.getReferenceById(userInfos.getId());
+            var equipe = equipeRepository.getReferenceById(groupId);
             var equipeUtilisateur = EquipeUtilisateur.builder()
                     .utilisateur(utilisateur)
                     .equipe(equipe)

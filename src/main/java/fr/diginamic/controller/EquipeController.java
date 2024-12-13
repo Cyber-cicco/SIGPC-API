@@ -89,7 +89,7 @@ public class EquipeController {
      * @param groupId identifiant du groupe visé
      * @param memberId identifiant de l'utilisateur visé
      * @param roleEquipeDto rôle que l'on souhaite assigner
-     * @return
+     * @return le rôle
      */
     @PatchMapping("/{groupId}/member/{memberId}/role")
     public ResponseEntity<?> changeRoleOfMember(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody RoleEquipeDto roleEquipeDto) {

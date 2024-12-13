@@ -42,7 +42,7 @@ public class AuthController {
             mailService.sendVerificationEmail(utilisateur);
             return ResponseEntity.status(200)
                     .header(HttpHeaders.SET_COOKIE, jwt)
-                    .body(utilisateurTransformer.toutilisateurDto(utilisateur));
+                    .body(utilisateurTransformer.toUtilisateurDto(utilisateur));
         } catch (Exception e) {
             //Suppression de l'utilisateur dans le cas où le mail de confirmation n'a pas pu être envoyé
             utilisateurService.deleteAccount(utilisateur.getEmail());
@@ -62,7 +62,7 @@ public class AuthController {
         var jwt = jwtService.buildJWTCookie(utilisateur);
         return ResponseEntity.status(200)
                 .header(HttpHeaders.SET_COOKIE, jwt)
-                .body(utilisateurTransformer.toutilisateurDto(utilisateur));
+                .body(utilisateurTransformer.toUtilisateurDto(utilisateur));
     }
 
     /**
@@ -72,10 +72,15 @@ public class AuthController {
      * @throws ApiException
      */
     @PostMapping("/password-change/send-request")
-    public ResponseEntity<?> createNewPasswordChangeAttempt(@RequestBody LoginDto loginDto) throws ApiException {
+    public ResponseEntity<?> createNewPasswordChangeAttempt(@RequestBody LoginDto loginDto) {
         var askMdp = utilisateurService.createNewPasswordChangeAttempt(loginDto);
-        mailService.sendPasswordChangeEmail(askMdp.tentativeSupressionMdp(), askMdp.email());
-        return ResponseEntity.ok(Map.of("message", askMdp.tentativeSupressionMdp().getLink().toString()));
+        try {
+            mailService.sendPasswordChangeEmail(askMdp.tentativeChangementMdp(), askMdp.email());
+            return ResponseEntity.ok(Map.of("message", askMdp.tentativeChangementMdp().getLink().toString()));
+        } catch (ApiException e) {
+            utilisateurService.removePasswordChangeAttempt(askMdp);
+            return ResponseEntity.ok(Map.of("message", "Erreur lors de l'envoie du mail"));
+        }
     }
 
     /**
@@ -86,7 +91,7 @@ public class AuthController {
      * @throws ApiException
      */
     @PostMapping("/password/change/{uuid}")
-    public ResponseEntity<?> changePassword(@PathVariable("uuid") String uuid, @RequestBody PasswordChangeDto passwordChangeDto) throws ApiException {
+    public ResponseEntity<?> changePassword(@PathVariable("uuid") String uuid, @RequestBody PasswordChangeDto passwordChangeDto) {
         utilisateurService.changePassword(uuid, passwordChangeDto);
         return ResponseEntity.ok(Map.of("message", "success"));
     }

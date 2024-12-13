@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import fr.diginamic.dto.CompteDto;
 import fr.diginamic.dto.LoginDto;
 import fr.diginamic.dto.PasswordChangeDto;
-import fr.diginamic.entities.TentativeSupressionMdp;
+import fr.diginamic.entities.TentativeChangementMdp;
 import fr.diginamic.entities.Utilisateur;
 import fr.diginamic.entities.enums.RoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
@@ -152,19 +152,23 @@ public class UtilisateurService {
         validatePassword(passwordChangeDto.getPassword());
         var utilisateur = passwordChange.getUtilisateur();
         if (utilisateur == null) {
-            throw new EntityNotFoundException("User was not supposed to be null");
+            throw new EntityNotFoundException("User was not supposed to be null"); // TODO : extraire ça dans une constante
         }
         utilisateur.setPassword(encoder.encode(passwordChangeDto.getPassword()));
         utilisateurRepository.save(utilisateur);
         tentativeSupressionMdpRepository.delete(passwordChange);
     }
 
+    public void removePasswordChangeAttempt(PasswordInfos askMdp) {
+        tentativeSupressionMdpRepository.delete(askMdp.tentativeChangementMdp);
+    }
+
     /**
      * Type contenant le mail auquel envoyé le lien ainsi que le lien
      * @param email le mail de l'utilisateur
-     * @param tentativeSupressionMdp l'objet représentant la tentative de changement de mot de passe
+     * @param tentativeChangementMdp l'objet représentant la tentative de changement de mot de passe
      */
-    public record PasswordInfos(String email, TentativeSupressionMdp tentativeSupressionMdp){}
+    public record PasswordInfos(String email, TentativeChangementMdp tentativeChangementMdp){}
 
     /**
      * Permet d'ajouter une demande de tentative de récupération de mot de passe
@@ -175,8 +179,8 @@ public class UtilisateurService {
     public PasswordInfos createNewPasswordChangeAttempt(LoginDto loginDto) {
         var utilisateur = utilisateurRepository.findUtilisateurByEmailAndEmailVerified(loginDto.getEmail(), true)
                 .orElseThrow(EntityNotFoundException::new);
-        var tentativeSuppressionMDP = TentativeSupressionMdp.builder()
-                .activeUntil(LocalDateTime.now().plusDays(7))
+        var tentativeSuppressionMDP = TentativeChangementMdp.builder()
+                .activeUntil(LocalDateTime.now().plusHours(24)) // TODO : extraire dans un fichier de configuration
                 .date(LocalDateTime.now())
                 .utilisateur(utilisateur)
                 .link(UUID.randomUUID())
