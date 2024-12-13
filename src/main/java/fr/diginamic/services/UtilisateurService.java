@@ -141,6 +141,7 @@ public class UtilisateurService {
         var utilisateur = utilisateurRepository.findByActivationLink(link)
                 .orElseThrow(EntityNotFoundException::new);
         utilisateur.setEmailVerified(true);
+        utilisateur.setActivationLink(null);
         utilisateurRepository.save(utilisateur);
     }
 }
