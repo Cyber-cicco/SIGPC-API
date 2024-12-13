@@ -27,7 +27,7 @@ public class Tache {
     @Column(name = "done", nullable = false, columnDefinition = "boolean default false")
     private boolean done;
 
-    @Column(name = "date_debut", nullable = true)
+    @Column(name = "date_debut", nullable = false)
     private Date dateDebut;
 
     @Column(name = "date_fin", nullable = true)
