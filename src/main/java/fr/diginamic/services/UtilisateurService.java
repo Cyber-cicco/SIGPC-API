@@ -41,7 +41,7 @@ public class UtilisateurService {
      * @throws ValidationException
      * @throws JsonProcessingException
      */
-    public Utilisateur createAccount(CompteDto compteDto) throws ValidationException, JsonProcessingException {
+    public Utilisateur createAccount(@Valid CompteDto compteDto) throws ValidationException, JsonProcessingException {
         validateAccount(compteDto);
         String password = encoder.encode(compteDto.getPassword());
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
