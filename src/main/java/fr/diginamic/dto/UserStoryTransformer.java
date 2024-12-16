@@ -1,14 +1,12 @@
 package fr.diginamic.dto;
 
-
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.UserStory;
-import fr.diginamic.dto.UserStoryDto;
 
 @Component
 public class UserStoryTransformer {
 
-    public UserStoryDto touserStoryDto(UserStory entity){
+    public UserStoryDto touserStoryDto(UserStory entity) {
         UserStoryDto dto = new UserStoryDto();
         dto.setId(entity.getId());
         dto.setLibelle(entity.getLibelle());
@@ -18,11 +16,11 @@ public class UserStoryTransformer {
         dto.setAvancement(entity.getAvancement());
         dto.setDateFin(entity.getDateFin());
 
-        //TODO : implémenter les méthodes pour les champs complexes
+        // TODO : implémenter les méthodes pour les champs complexes
         return dto;
-    }      
+    }
 
-    public UserStory touserStory(UserStoryDto dto){
+    public UserStory touserStory(UserStoryDto dto) {
         UserStory entity = new UserStory();
         entity.setId(dto.getId());
         entity.setLibelle(dto.getLibelle());
@@ -32,7 +30,7 @@ public class UserStoryTransformer {
         entity.setAvancement(dto.getAvancement());
         entity.setDateFin(dto.getDateFin());
 
-        //TODO : implémenter les méthodes pour les champs complexes
+        // TODO : implémenter les méthodes pour les champs complexes
         return entity;
-    }      
+    }
 }

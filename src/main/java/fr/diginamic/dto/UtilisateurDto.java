@@ -17,7 +17,9 @@ public class UtilisateurDto {
     private String email;
     private String nom;
     private String prenom;
-    private boolean email_verified;
+    //TODO : supprimer ce champ, n'est là que pour le test
+    private String activationLink;
+    private boolean emailVerified;
     private String roles;
     private LocalDateTime dateEcheanceSuppression;
     private TentativeSupressionMdpDto tentativeSuppresionMdp;
