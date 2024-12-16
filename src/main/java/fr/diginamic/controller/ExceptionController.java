@@ -1,5 +1,6 @@
 package fr.diginamic.controller;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import fr.diginamic.exception.UnauthorizedException;
 import fr.diginamic.shared.ErrorMessage;
 import jakarta.validation.ValidationException;
@@ -18,5 +19,9 @@ public class ExceptionController {
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorMessage> handleUnauthorizedException(UnauthorizedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorMessage("Unauthorized"));
+    }
+    @ExceptionHandler(JsonMappingException.class)
+    public ResponseEntity<ErrorMessage> handleMalformedRequest(JsonMappingException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorMessage(ex.getMessage()));
     }
 }

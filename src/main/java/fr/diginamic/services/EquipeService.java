@@ -128,6 +128,12 @@ public class EquipeService {
         return equipeUtilisateurRepository.save(equipeUtilisateur);
     }
 
+    public void leaveGroup(AuthenticationInfos userInfos, Long groupId) {
+        var group = equipeUtilisateurRepository.findByUtilisateur_IdAndEquipe_Id(userInfos.getId(), groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        equipeUtilisateurRepository.delete(group);
+    }
+
     public record DemandeAjoutEquipe(String senderEmail, String recipientEmail){}
 
     /**

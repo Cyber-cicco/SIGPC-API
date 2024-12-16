@@ -114,4 +114,12 @@ public class EquipeController {
         return ResponseEntity.ok(Map.of("message", "La demande a été envoyée"));
     }
 
+    @PatchMapping("/{groupId}/leave")
+    public ResponseEntity<?> leaveGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId) {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
+        equipeService.leaveGroup(userInfos, groupId);
+        return ResponseEntity.ok(Map.of("message", "Vous avez bien quitter le groupe"));
+    }
+
 }
