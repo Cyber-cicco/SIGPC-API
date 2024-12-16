@@ -128,10 +128,21 @@ public class EquipeService {
         return equipeUtilisateurRepository.save(equipeUtilisateur);
     }
 
-    public void leaveGroup(AuthenticationInfos userInfos, Long groupId) {
-        var group = equipeUtilisateurRepository.findByUtilisateur_IdAndEquipe_Id(userInfos.getId(), groupId)
+    /**
+     * Permet de quitter le groupe
+     * @param userId l'identifiant de l'utilisateur
+     * @param groupId l'identifiant du groupe à quitter
+     */
+    public void leaveGroup(Long userId, Long groupId) {
+        var group = equipeRepository.findById(groupId)
                 .orElseThrow(EntityNotFoundException::new);
-        equipeUtilisateurRepository.delete(group);
+        if (group.getAdmin().getId().equals(userId)) {
+            throw new ValidationException("Vous ne pouvez quitter un groupe dont vous êtes l'administrateur ou supprimer l'administrateur. Transférez les droits d'administration ou supprimez le groupe");
+        }
+        var equipeUtilisateur = equipeUtilisateurRepository.findByUtilisateur_IdAndEquipe_Id(userId, groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        equipeUtilisateurRepository.delete(equipeUtilisateur);
+
     }
 
     public record DemandeAjoutEquipe(String senderEmail, String recipientEmail){}
