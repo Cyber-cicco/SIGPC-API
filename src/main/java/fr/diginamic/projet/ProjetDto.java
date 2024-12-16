@@ -50,8 +50,12 @@ public class ProjetDto {
   @CustomLocalDate
   private LocalDate dateDebut;
 
+  @JsonDeserialize(using = LocalDateDeserializer.class)
+  @CustomLocalDate
   private LocalDate dateFin;
 
+  @JsonDeserialize(using = LocalDateDeserializer.class)
+  @CustomLocalDate
   private LocalDate dateFinEstimee;
 
   @NotNull(message = "L'email de contact est requis")

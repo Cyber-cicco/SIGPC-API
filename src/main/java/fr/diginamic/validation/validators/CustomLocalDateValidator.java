@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class LocalDateValidator implements ConstraintValidator<CustomLocalDate, LocalDate> {
+public class CustomLocalDateValidator implements ConstraintValidator<CustomLocalDate, LocalDate> {
 
   private String localDateFormat;
 
@@ -21,6 +21,10 @@ public class LocalDateValidator implements ConstraintValidator<CustomLocalDate, 
 
   private boolean isValidDate(LocalDate localDate) {
     DateTimeFormatter dateFormatter = getDateFormatter(localDateFormat);
+
+    if (localDate == null) {
+      return true;
+    }
 
     try {
       dateFormatter.parse(localDate.toString());

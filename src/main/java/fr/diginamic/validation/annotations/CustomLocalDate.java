@@ -1,12 +1,12 @@
 package fr.diginamic.validation.annotations;
 
-import fr.diginamic.validation.validators.LocalDateValidator;
+import fr.diginamic.validation.validators.CustomLocalDateValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-@Constraint(validatedBy = LocalDateValidator.class)
+@Constraint(validatedBy = CustomLocalDateValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
