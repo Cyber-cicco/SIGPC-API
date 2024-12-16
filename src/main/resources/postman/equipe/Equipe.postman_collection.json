@@ -201,6 +201,56 @@
 				"description": "Se connecter en tant qu'admin d'une équipe.\nAvoir un autre utilisateur connecté dans l'équipe\nChanger les identifiants en conséquence"
 			},
 			"response": []
+		},
+		{
+			"name": "Refuser une demande pour rejoindre une équipe",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipes/3/join-request/member/2/false",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"equipes",
+						"3",
+						"join-request",
+						"member",
+						"2",
+						"false"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accepter une demande pour rejoindre une équipe",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/equipes/3/join-request/member/2/true",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"equipes",
+						"3",
+						"join-request",
+						"member",
+						"2",
+						"true"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

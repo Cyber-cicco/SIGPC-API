@@ -91,4 +91,13 @@ public class MailService {
         sendSmtpEmail.templateId(6L);
         sendEmail(sendSmtpEmail, recipientEmail, params);
     }
+
+    public void sendAcceptJoin(String email, Boolean accepted) throws ApiException {
+        setDefaultClient();
+        var params = new HashMap<String, String>();
+        params.put("accepted", accepted ? "acceptée" : "refusée");
+        SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+        sendSmtpEmail.templateId(7L);
+        sendEmail(sendSmtpEmail, email, params);
+    }
 }
