@@ -1,0 +1,23 @@
+services:
+  database:
+    image: mariadb
+    volumes:
+      - sigpc-database:/var/lib/mysql
+    container_name: sigpc-database
+    environment:
+      MARIADB_ROOT_PASSWORD: pazo1928!
+      MARIADB_DATABASE: sigpc
+      MARIADB_USER: sigpc-user
+      MARIADB_PASSWORD: pazo1928!
+
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "/usr/local/bin/healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  sigpc-database:
