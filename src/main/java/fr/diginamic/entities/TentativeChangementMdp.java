@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -13,7 +12,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Builder
-public class TentativeSupressionMdp {
+public class TentativeChangementMdp {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)

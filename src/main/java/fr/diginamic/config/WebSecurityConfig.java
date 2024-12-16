@@ -51,7 +51,7 @@ public class WebSecurityConfig {
      * @param jwtAuthenticationFilter middleware custom permettant de créer une session à partir du cookie jwt
      * @param mvc utilitaire permettant de gérer le matching des routes
      * @param configurationSource bean permettant de gérer les CORS
-     * @return
+     * @return la filter chain
      * @throws Exception
      */
     @Bean
@@ -59,6 +59,12 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/auth/login")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/auth/password/change/**")).permitAll()
+                        .requestMatchers(mvc.pattern("api/v1/equipes/**")).authenticated()
+                        .requestMatchers(mvc.pattern("api/v1/equipes")).authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable
                 )

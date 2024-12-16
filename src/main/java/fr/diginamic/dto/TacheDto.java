@@ -1,10 +1,11 @@
 package fr.diginamic.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import fr.diginamic.dto.UserStoryDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +17,9 @@ public class TacheDto {
     private String nom;
     private String description;
     private boolean done;
-    private UserStoryDto userStory;
+    private Date dateDebut;
+    private Date dateFin;
+    private Date finEstime;
+    private Long userStoryId;
 
 }

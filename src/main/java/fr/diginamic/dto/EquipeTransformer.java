@@ -1,9 +1,9 @@
 package fr.diginamic.dto;
 
 
+import fr.diginamic.entities.Utilisateur;
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Equipe;
-import fr.diginamic.dto.EquipeDto;
 
 @Component
 public class EquipeTransformer {
@@ -15,18 +15,17 @@ public class EquipeTransformer {
         dto.setContact(entity.getContact());
         dto.setDescription(entity.getDescription());
 
-        //TODO : implémenter les méthodes pour les champs complexes
         return dto;
     }      
 
-    public Equipe toequipe(EquipeDto dto){
+    public Equipe toequipe(Utilisateur utilisateur, EquipeDto dto){
         Equipe entity = new Equipe();
         entity.setId(dto.getId());
         entity.setNom(dto.getNom());
+        entity.setAdmin(utilisateur);
         entity.setContact(dto.getContact());
         entity.setDescription(dto.getDescription());
 
-        //TODO : implémenter les méthodes pour les champs complexes
         return entity;
     }      
 }
