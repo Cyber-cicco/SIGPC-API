@@ -75,4 +75,29 @@ public class MailService {
         sendSmtpEmail.to(List.of(new SendSmtpEmailTo().email(invitationDto.getEmail())));
         apiInstance.sendTransacEmail(sendSmtpEmail);
     }
+
+    /**
+     * Envoie un email à l'administrateur d'un groupe pour lui dire que l'on souhaite
+     * rejoindre le groupe
+     * @param senderEmail l'email de l'utilisateur qui fait la demande
+     * @param recipientEmail l'email de l'administrateur du groupe
+     * @throws ApiException
+     */
+    public void sendDemandeAppartenance(String senderEmail, String recipientEmail) throws ApiException {
+        setDefaultClient();
+        var params = new HashMap<String, String>();
+        params.put("mail", senderEmail);
+        SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+        sendSmtpEmail.templateId(6L);
+        sendEmail(sendSmtpEmail, recipientEmail, params);
+    }
+
+    public void sendAcceptJoin(String email, Boolean accepted) throws ApiException {
+        setDefaultClient();
+        var params = new HashMap<String, String>();
+        params.put("accepted", accepted ? "acceptée" : "refusée");
+        SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+        sendSmtpEmail.templateId(7L);
+        sendEmail(sendSmtpEmail, email, params);
+    }
 }
