@@ -7,10 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import fr.diginamic.dto.ProjetDto;
-import java.util.List;
-import fr.diginamic.dto.UtilisateurDto;
-import fr.diginamic.dto.InvitationDto;
 
 @AllArgsConstructor
 @NoArgsConstructor

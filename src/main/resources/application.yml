@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: sigpc-api
   datasource:
     url: @jdbc.url@
     username: @jdbc.user@
@@ -8,8 +10,9 @@ spring:
     show-sql: false
     database: mysql
     generate-ddl: true
-  brevo:
-    key: @brevo.api-key@
+
+    hibernate:
+      ddl-auto: update
 
   servlet:
     multipart:
@@ -31,5 +34,6 @@ brevo:
   key: ${BREVO_API_KEY}
 
 server:
-  address: localhost
   port: 8080
+#  servlet:
+#    context-path: /api/v1
