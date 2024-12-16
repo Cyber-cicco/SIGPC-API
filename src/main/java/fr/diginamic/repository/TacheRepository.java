@@ -6,4 +6,5 @@ import fr.diginamic.entities.Tache;
 
 public interface TacheRepository extends JpaRepository<Tache, Long> {
 
+    
 }

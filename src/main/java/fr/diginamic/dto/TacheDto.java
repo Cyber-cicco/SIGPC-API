@@ -20,6 +20,6 @@ public class TacheDto {
     private Date dateDebut;
     private Date dateFin;
     private Date finEstime;
-    private UserStoryDto userStory;
+    private Long userStoryId;
 
 }
