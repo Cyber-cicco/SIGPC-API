@@ -4,6 +4,8 @@
 
 # SIGPC API
 jpa
+sigpc-db-test.sql
+sigpc.iml
 target
 templates
 
