@@ -1,8 +1,9 @@
 package fr.diginamic.services;
 
-import fr.diginamic.dto.CompteDto;
+import fr.diginamic.utilisateur.CompteDto;
 import fr.diginamic.entities.Utilisateur;
 import fr.diginamic.repository.UtilisateurRepository;
+import fr.diginamic.utilisateur.UtilisateurService;
 import jakarta.xml.bind.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

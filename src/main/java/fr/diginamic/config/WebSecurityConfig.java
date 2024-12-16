@@ -64,6 +64,7 @@ public class WebSecurityConfig {
                         .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request")).permitAll()
                         .requestMatchers(mvc.pattern("api/v1/auth/password/change/**")).permitAll()
                         .requestMatchers(mvc.pattern("api/v1/equipes/**")).authenticated()
+                        .requestMatchers(mvc.pattern("api/v1/projets/**")).authenticated()
                         .requestMatchers(mvc.pattern("api/v1/equipes")).authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable

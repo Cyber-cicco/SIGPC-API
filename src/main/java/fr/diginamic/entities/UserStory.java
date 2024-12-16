@@ -1,6 +1,7 @@
 package fr.diginamic.entities;
 
 import fr.diginamic.entities.enums.AvancementEnum;
+import fr.diginamic.projet.Projet;
 import jakarta.persistence.*;
 import lombok.*;
 

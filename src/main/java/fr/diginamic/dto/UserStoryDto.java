@@ -1,6 +1,7 @@
 package fr.diginamic.dto;
 
 import fr.diginamic.entities.enums.AvancementEnum;
+import fr.diginamic.utilisateur.UtilisateurDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +23,9 @@ public class UserStoryDto {
     private AvancementEnum avancement;
     private LocalDate dateFin;
     private LocalDate finEstime;
-    private ProjetDto projet;
     private List<BugDto> bugs;
     private List<DocumentDto> documents;
+    private Long projetId;
     private UtilisateurDto utilisateurAssigne;
 
 }

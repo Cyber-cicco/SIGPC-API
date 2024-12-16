@@ -1,5 +1,9 @@
-package fr.diginamic.dto;
+package fr.diginamic.utilisateur;
 
+import fr.diginamic.dto.ReactionDto;
+import fr.diginamic.equipe.EquipeDto;
+import fr.diginamic.equipe.InvitationDto;
+import fr.diginamic.projet.ProjetDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

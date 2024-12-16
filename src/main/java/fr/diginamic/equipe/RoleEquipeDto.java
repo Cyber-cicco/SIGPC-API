@@ -1,4 +1,4 @@
-package fr.diginamic.dto;
+package fr.diginamic.equipe;
 
 import fr.diginamic.entities.enums.EquipeRoleEnum;
 import lombok.*;

@@ -1,8 +1,10 @@
 package fr.diginamic.projet;
 
 import static fr.diginamic.config.Constants.API_VERSION_1;
+import static fr.diginamic.config.Constants.AUTH_TOKEN;
 import static fr.diginamic.shared.ResponseUtil.success;
 
+import fr.diginamic.services.SecurityService;
 import fr.diginamic.shared.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProjetController {
 
   private final ProjetService projetService;
+  private final SecurityService securityService;
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
@@ -39,8 +42,11 @@ public class ProjetController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<ApiResponse<ProjetDto>> createProjet(
-      @Valid @RequestBody ProjetDto projetDto) {
-    ProjetDto createdProjetDto = projetService.createProjet(projetDto);
+          @CookieValue(AUTH_TOKEN) String token,
+          @Valid @RequestBody ProjetDto projetDto) {
+
+    var userInfos = securityService.getAuthenticationInfos(token);
+    ProjetDto createdProjetDto = projetService.createProjet(userInfos.getId(), projetDto);
     ApiResponse<ProjetDto> apiResponse = success("Projet créé", createdProjetDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
   }

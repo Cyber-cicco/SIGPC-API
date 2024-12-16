@@ -18,6 +18,8 @@ spring:
     multipart:
       max-file-size: "10MB"
       max-request-size: "10MB"
+  brevo:
+    key: @brevo.api-key@
 logging:
   level:
     org.springframework: @spring.log-level@
@@ -34,6 +36,6 @@ brevo:
   key: ${BREVO_API_KEY}
 
 server:
-  port: 8080
+  port: 8090
 #  servlet:
 #    context-path: /api/v1

@@ -3,7 +3,7 @@ package fr.diginamic.services;
 import fr.diginamic.config.JwtService;
 import fr.diginamic.entities.enums.EquipeRoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
-import fr.diginamic.repository.EquipeUtilisateurRepository;
+import fr.diginamic.equipe.EquipeUtilisateurRepository;
 import fr.diginamic.shared.AuthenticationInfos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

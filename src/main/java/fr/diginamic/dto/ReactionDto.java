@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import fr.diginamic.dto.UtilisateurDto;
-import fr.diginamic.dto.CommentaireDto;
+import fr.diginamic.utilisateur.UtilisateurDto;
 
 @AllArgsConstructor
 @NoArgsConstructor

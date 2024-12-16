@@ -38,7 +38,7 @@ public class UserStoryController {
         if (userStoryDto.getCode() == null) {
             throw new IllegalArgumentException("Le code est obligatoire");
         }
-        if (userStoryDto.getProjet() == null) {
+        if (userStoryDto.getProjetId() == null) {
             throw new IllegalArgumentException("Le projet est obligatoire");
         }
         UserStoryDto createdUserStory = userStoryService.createUserStory(userStoryDto);

@@ -1,7 +1,13 @@
 package fr.diginamic.projet;
 
+import fr.diginamic.entities.ProjetUtilisateur;
+import fr.diginamic.entities.enums.ProjetRoleEnum;
+import fr.diginamic.equipe.EquipeRepository;
 import fr.diginamic.exception.ResourceNotFoundException;
 import java.util.List;
+
+import fr.diginamic.repository.ProjetUtilisateurRepository;
+import fr.diginamic.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -11,6 +17,9 @@ import org.springframework.stereotype.Service;
 public class ProjetService implements ProjetServiceInterface {
 
   private final ProjetRepository projetRepository;
+  private final UtilisateurRepository utilisateurRepository;
+  private final ProjetUtilisateurRepository projetUtilisateurRepository;
+  private final EquipeRepository equipeRepository;
   private final ModelMapper modelMapper;
 
   public List<ProjetDto> getAllProjets() {
@@ -29,16 +38,19 @@ public class ProjetService implements ProjetServiceInterface {
     return modelMapper.map(projetDansDb, ProjetDto.class);
   }
 
-  public ProjetDto createProjet(ProjetDto projetDto) {
-    Projet projet = modelMapper.map(projetDto, Projet.class);
-    //    Projet savedProjet = projetTransformer.toProjet(projetDto);
-    //    Projet savedProjet = projetRepository.findByNom(projet.getNom());
-    //    if (savedProjet != null) {
-    //      throw new ApiException("Un projet avec le nom '" + projetDto.getNom() + "' existe
-    // déjà");
-    //    }
-    Projet savedProjet = projetRepository.save(projet);
-    return modelMapper.map(savedProjet, ProjetDto.class);
-    //    return projetTransformer.toProjetDto(savedProjet);
+  public ProjetDto createProjet(Long userId, ProjetDto projetDto) {
+    var projet = modelMapper.map(projetDto, Projet.class);
+    var utilisateur = utilisateurRepository.getReferenceById(userId);
+    if (projetDto.getEquipeId() != null) {
+      var equipe = equipeRepository.getReferenceById(projetDto.getEquipeId());
+      projet.setEquipe(equipe);
+    }
+    projet.setAdmin(utilisateur);
+    projetUtilisateurRepository.save(ProjetUtilisateur.builder()
+            .projet(projet)
+            .utilisateur(utilisateur)
+            .role(ProjetRoleEnum.MEMBRE)
+            .build());
+    return modelMapper.map(projetRepository.save(projet), ProjetDto.class);
   }
 }

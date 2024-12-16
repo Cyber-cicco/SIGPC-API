@@ -1,13 +1,10 @@
-package fr.diginamic.services;
-import fr.diginamic.dto.EquipeTransformer;
-import fr.diginamic.dto.RoleEquipeDto;
+package fr.diginamic.equipe;
 import fr.diginamic.dto.SimpleInvitationDto;
 import fr.diginamic.entities.Equipe;
 import fr.diginamic.entities.EquipeUtilisateur;
 import fr.diginamic.entities.Invitation;
 import fr.diginamic.entities.enums.EquipeRoleEnum;
 import fr.diginamic.entities.enums.TypeInvitationEnum;
-import fr.diginamic.repository.EquipeUtilisateurRepository;
 import fr.diginamic.repository.InvitationRepository;
 import fr.diginamic.repository.UtilisateurRepository;
 import fr.diginamic.shared.AuthenticationInfos;
@@ -16,8 +13,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import fr.diginamic.dto.EquipeDto;
-import fr.diginamic.repository.EquipeRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 

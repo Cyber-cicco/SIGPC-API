@@ -1,25 +1,27 @@
-package fr.diginamic.controller;
+package fr.diginamic.utilisateur;
+
+import static fr.diginamic.config.Constants.API_VERSION_1;
+import static fr.diginamic.shared.ResponseUtil.success;
+import static fr.diginamic.shared.ResponseUtil.error;
 
 import brevo.ApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.diginamic.config.JwtService;
-import fr.diginamic.dto.CompteDto;
-import fr.diginamic.dto.LoginDto;
-import fr.diginamic.dto.PasswordChangeDto;
-import fr.diginamic.dto.UtilisateurTransformer;
+import fr.diginamic.error.ApiError;
 import fr.diginamic.services.MailService;
-import fr.diginamic.services.UtilisateurService;
 import fr.diginamic.shared.ErrorMessage;
+import fr.diginamic.validation.annotations.ValidPassword;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
+@RequestMapping(API_VERSION_1 + "/auth")
+@Validated
 public class AuthController {
 
     private final UtilisateurService utilisateurService;
@@ -32,17 +34,16 @@ public class AuthController {
      * classe CompteDto
      * @param compteDto les informations du nouveau compte
      * @return une réponse pouvant être les informations de l'utilisateur ou un message d'erreur
-     * @throws JsonProcessingException
      */
     @PostMapping("/compte")
-    public ResponseEntity<?> creerCompte(@RequestBody CompteDto compteDto) throws JsonProcessingException {
+    public ResponseEntity<?> creerCompte(@RequestBody @Valid CompteDto compteDto) throws JsonProcessingException {
         var utilisateur = utilisateurService.createAccount(compteDto);
         try {
             var jwt = jwtService.buildJWTCookie(utilisateur);
             mailService.sendVerificationEmail(utilisateur);
             return ResponseEntity.status(200)
                     .header(HttpHeaders.SET_COOKIE, jwt)
-                    .body(utilisateurTransformer.toUtilisateurDto(utilisateur));
+                    .body(success("Compte correctement créé.", utilisateurTransformer.toUtilisateurDto(utilisateur)));
         } catch (Exception e) {
             //Suppression de l'utilisateur dans le cas où le mail de confirmation n'a pas pu être envoyé
             utilisateurService.deleteAccount(utilisateur.getEmail());
@@ -57,29 +58,32 @@ public class AuthController {
      * @return la réponse
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto) {
         var utilisateur = utilisateurService.login(loginDto);
         var jwt = jwtService.buildJWTCookie(utilisateur);
         return ResponseEntity.status(200)
                 .header(HttpHeaders.SET_COOKIE, jwt)
-                .body(utilisateurTransformer.toUtilisateurDto(utilisateur));
+                .body(success("Authentification effectuée", utilisateurTransformer.toUtilisateurDto(utilisateur)));
     }
 
     /**
      * Permet d'envoyer un email de récupération de mot de passe à l'email précisé
      * @param loginDto l'objet contenant l'email
      * @return une réponse contenant le lien d'activation en tant que chaine de caractère
-     * @throws ApiException
      */
     @PostMapping("/password-change/send-request")
-    public ResponseEntity<?> createNewPasswordChangeAttempt(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> createNewPasswordChangeAttempt(@RequestBody @Valid LoginDto loginDto) {
         var askMdp = utilisateurService.createNewPasswordChangeAttempt(loginDto);
         try {
             mailService.sendPasswordChangeEmail(askMdp.tentativeChangementMdp(), askMdp.email());
-            return ResponseEntity.ok(Map.of("message", askMdp.tentativeChangementMdp().getLink().toString()));
+            return ResponseEntity.ok(success("E-mail envoyé."));
         } catch (ApiException e) {
             utilisateurService.removePasswordChangeAttempt(askMdp);
-            return ResponseEntity.ok(Map.of("message", "Erreur lors de l'envoie du mail"));
+            return ResponseEntity.ok(error("Erreur lors de l'envoie du mail", ApiError.builder()
+                    .method("POST")
+                    .url(API_VERSION_1 + "auth/password-change/send-request")
+                    .errorMsg("Le mail n'a pas pu être envoyé. Veuillez réessayer ultérieurement")
+                    .build()));
         }
     }
 
@@ -88,12 +92,11 @@ public class AuthController {
      * @param uuid l'identifiant unique de la tentative de changement de mot de passe
      * @param passwordChangeDto object contenant le mot de passe et sa confirmation
      * @return une réponse indiquant la réussite de la transaction
-     * @throws ApiException
      */
     @PostMapping("/password/change/{uuid}")
-    public ResponseEntity<?> changePassword(@PathVariable("uuid") String uuid, @RequestBody PasswordChangeDto passwordChangeDto) {
+    public ResponseEntity<?> changePassword(@PathVariable("uuid") String uuid, @RequestBody @Valid PasswordChangeDto passwordChangeDto) {
         utilisateurService.changePassword(uuid, passwordChangeDto);
-        return ResponseEntity.ok(Map.of("message", "success"));
+        return ResponseEntity.ok(success("Changement de mot de passe effectué"));
     }
 
     /**
@@ -104,6 +107,6 @@ public class AuthController {
     @GetMapping("/email/verify/{uuid}")
     public ResponseEntity<?> verfiyEmail(@PathVariable("uuid") String uuid) {
         utilisateurService.activateAccount(uuid);
-        return ResponseEntity.ok(Map.of("message", "activation réussie"));
+        return ResponseEntity.ok(success("Vérification réussie."));
     }
 }

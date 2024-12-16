@@ -1,24 +1,23 @@
-package fr.diginamic.controller;
+package fr.diginamic.equipe;
 
 import brevo.ApiException;
-import fr.diginamic.dto.EquipeDto;
-import fr.diginamic.dto.EquipeTransformer;
-import fr.diginamic.dto.RoleEquipeDto;
 import fr.diginamic.dto.SimpleInvitationDto;
 import fr.diginamic.entities.Equipe;
 import fr.diginamic.services.MailService;
 import fr.diginamic.services.SecurityService;
+import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import fr.diginamic.services.EquipeService;
 
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/equipes")
+@Validated
 public class EquipeController {
 
 
@@ -34,7 +33,7 @@ public class EquipeController {
      * @return les informations de la nouvelle équipe
      */
     @PostMapping
-    public ResponseEntity<EquipeDto> postNewEquipe(@CookieValue("AUTH-TOKEN") String token, @RequestBody EquipeDto equipeDto) {
+    public ResponseEntity<EquipeDto> postNewEquipe(@CookieValue("AUTH-TOKEN") String token, @Valid @RequestBody EquipeDto equipeDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         Equipe equipe = equipeService.postNewEquipe(userInfos, equipeDto);
         return ResponseEntity.ok(equipeTransformer.toequipeDto(equipe));
@@ -49,7 +48,7 @@ public class EquipeController {
      * @return un message indiquant la réussite de l'opération
      */
     @PostMapping("/{groupId}/invite")
-    public ResponseEntity<?> postInvitation(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody SimpleInvitationDto invitationDto) {
+    public ResponseEntity<?> postInvitation(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody @Valid SimpleInvitationDto invitationDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
         equipeService.postInvite(invitationDto, groupId, userInfos);
@@ -93,7 +92,7 @@ public class EquipeController {
      * @return le rôle
      */
     @PatchMapping("/{groupId}/member/{memberId}/role")
-    public ResponseEntity<?> changeRoleOfMember(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody RoleEquipeDto roleEquipeDto) {
+    public ResponseEntity<?> changeRoleOfMember(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody @Valid RoleEquipeDto roleEquipeDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
         var utilisateurEquipe = equipeService.changeRole(memberId, groupId, roleEquipeDto);

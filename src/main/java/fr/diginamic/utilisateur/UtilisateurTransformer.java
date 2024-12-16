@@ -1,4 +1,4 @@
-package fr.diginamic.dto;
+package fr.diginamic.utilisateur;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,7 +10,7 @@ import java.util.UUID;
 @Component
 public class UtilisateurTransformer {
 
-    public Utilisateur fromCompteToUtilisateur(CompteDto compteDto, String password, String roles, UUID activationLink) throws JsonProcessingException {
+    public Utilisateur fromCompteToUtilisateur(CompteDto compteDto, String password, String roles, UUID activationLink) {
         return Utilisateur.builder()
                 .nom(compteDto.getNom())
                 .prenom(compteDto.getPrenom())
@@ -32,19 +32,5 @@ public class UtilisateurTransformer {
         dto.setDateEcheanceSuppression(entity.getDateEcheanceSuppression());
 
         return dto;
-    }      
-
-    public Utilisateur toutilisateur(UtilisateurDto dto){
-        Utilisateur entity = new Utilisateur();
-        entity.setId(dto.getId());
-        entity.setEmail(dto.getEmail());
-        entity.setNom(dto.getNom());
-        entity.setPrenom(dto.getPrenom());
-        entity.setEmailVerified(dto.isEmailVerified());
-        entity.setRoles(dto.getRoles());
-        entity.setDateEcheanceSuppression(dto.getDateEcheanceSuppression());
-
-        //TODO : implémenter les méthodes pour les champs complexes
-        return entity;
     }      
 }

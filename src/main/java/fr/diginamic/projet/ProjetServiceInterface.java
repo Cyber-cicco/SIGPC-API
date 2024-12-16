@@ -10,5 +10,5 @@ public interface ProjetServiceInterface {
 
   ProjetDto getProjetById(Long idProjet) throws ResourceNotFoundException;
 
-  ProjetDto createProjet(ProjetDto projetDto) throws ApiException;
+  ProjetDto createProjet(Long userId, ProjetDto projetDto) throws ApiException;
 }
