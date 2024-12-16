@@ -3,12 +3,12 @@ package fr.diginamic.exception;
 import lombok.Getter;
 
 @Getter
-public class APIException extends RuntimeException {
-  public APIException() {
+public class ApiException extends RuntimeException {
+  public ApiException() {
     super("Exception fonctionnelle générique - Contactez l'administrateur");
   }
 
-  public APIException(String message) {
+  public ApiException(String message) {
     super(message);
   }
 }

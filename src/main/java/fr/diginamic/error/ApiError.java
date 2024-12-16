@@ -1,5 +1,6 @@
 package fr.diginamic.error;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +11,8 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class APIError {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ApiError {
   /** Timestamp de l'erreur */
   private long timestamp = new Date().getTime();
 
@@ -25,7 +27,7 @@ public class APIError {
 
   private Map<String, String> validationErrors;
 
-  public APIError(String method, String errorMsg, String url) {
+  public ApiError(String method, String errorMsg, String url) {
     this.method = method;
     this.errorMsg = errorMsg;
     this.url = url;

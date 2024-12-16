@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResourceNotFoundException extends APIException {
+public class ResourceNotFoundException extends ApiException {
   private String nomRessource;
   private String champ;
   private String nomChamp;
