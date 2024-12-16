@@ -23,7 +23,7 @@ logging:
   level:
     org.springframework: @spring.log-level@
   file:
-    path: "logs/log.log"
+    path: "~/logs.txt"
 jwt:
   cookie: "AUTH-TOKEN"
   expires_in: 864000
