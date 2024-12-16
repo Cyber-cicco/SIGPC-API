@@ -6,7 +6,10 @@
 jpa
 target
 templates
+sigpc.iml
+sigpc-db-test.sql
 
 # Logs
 *.log
 /~/logs.txt
+logs/
