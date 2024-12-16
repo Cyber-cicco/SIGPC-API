@@ -31,6 +31,9 @@ public class CommentaireController {
         if (commentaireDto.getContenu() == null) {
             throw new IllegalArgumentException("Le contenu est obligatoire");
         }
+        if (commentaireDto.getContenu().length() > 512) {
+            throw new IllegalArgumentException("Votre commentaire est trop long");
+        }
         if (commentaireDto.getProjet() == null) {
             throw new IllegalArgumentException("Le projet est obligatoire");
         }
