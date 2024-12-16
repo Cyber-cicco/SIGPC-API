@@ -8,7 +8,7 @@ import fr.diginamic.dto.EvenementDto;
 import fr.diginamic.dto.ProjetUtilisateurDto;
 import fr.diginamic.dto.RessourceDto;
 import fr.diginamic.dto.SprintDto;
-import fr.diginamic.validation.CustomLocalDate;
+import fr.diginamic.validation.annotations.CustomLocalDate;
 import fr.diginamic.validation.annotations.EndDateAfterStartDate;
 import fr.diginamic.validation.deserializers.LocalDateDeserializer;
 import jakarta.validation.constraints.*;
@@ -22,17 +22,6 @@ import lombok.*;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-// @EndDateAfterStartDateStr.List({
-//  @EndDateAfterStartDateStr(
-//      startDateField = "dateDebut",
-//      endDateField = "dateFin",
-//      message = "La date de fin doit être après la date de début"),
-//  @EndDateAfterStartDateStr(
-//      startDateField = "dateDebut",
-//      endDateField = "dateFinEstimee",
-//      message = "La date de fin estimée doit être après la date de début")
-// })
-
 @EndDateAfterStartDate.List({
   @EndDateAfterStartDate(
       startDateField = "dateDebut",
@@ -56,12 +45,7 @@ public class ProjetDto {
   @Size(max = 512, message = "La description doit faire moins de 512 caractères")
   private String description;
 
-  //  @NotNull(message = "La date de début est requise")
-  //  @StringToLocalDate
-  //  private String dateDebut;
-
   @NotNull(message = "La date de début est requise")
-  //  @JsonFormat(pattern = "uuuu-MM-dd")
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @CustomLocalDate
   private LocalDate dateDebut;
@@ -69,17 +53,6 @@ public class ProjetDto {
   private LocalDate dateFin;
 
   private LocalDate dateFinEstimee;
-
-  //  private String dateFin;
-
-  //  private String dateFinEstimee;
-
-  //
-  //  @JsonFormat(pattern = "yyyy-MM-dd")
-  //  private LocalDate dateFin;
-  //
-  //  @JsonFormat(pattern = "yyyy-MM-dd")
-  //  private LocalDate dateFinEstimee;
 
   @NotNull(message = "L'email de contact est requis")
   @Email(message = "Le contact doit être un e-mail valide")

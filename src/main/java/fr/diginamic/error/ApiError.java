@@ -25,8 +25,10 @@ public class ApiError {
   /** URL de la requête dont provient l'erreur */
   private String url;
 
+  /** Erreurs de validation */
   private Map<String, String> validationErrors;
 
+  /** Constructeur */
   public ApiError(String method, String errorMsg, String url) {
     this.method = method;
     this.errorMsg = errorMsg;

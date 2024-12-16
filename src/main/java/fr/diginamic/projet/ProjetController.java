@@ -28,14 +28,12 @@ public class ProjetController {
     return new ResponseEntity<>(apiResponse, HttpStatus.OK);
   }
 
-  // TODO : modifier
   @GetMapping("/{idProjet}")
   @ResponseStatus(HttpStatus.OK)
   public ResponseEntity<ApiResponse<ProjetDto>> getProjetById(@PathVariable Long idProjet) {
     ProjetDto projetDto = projetService.getProjetById(idProjet);
     ApiResponse<ProjetDto> apiResponse = success("Projet trouvé", projetDto);
     return ResponseEntity.ok().body(apiResponse);
-    //    return new ResponseEntity<>(apiResponse,HttpStatus.OK);
   }
 
   @PostMapping

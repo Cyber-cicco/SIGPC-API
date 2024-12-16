@@ -32,7 +32,8 @@ public class LocalDateDeserializer extends StdDeserializer<LocalDate> {
     try {
       return LocalDate.parse(date, formatter);
     } catch (DateTimeParseException e) {
-      throw new ApiException("Date invalide");
+      throw new ApiException(
+          "Date invalide ou format incorrect. Utilisez " + "format 'uuuu-MM-dd'");
     }
   }
 }

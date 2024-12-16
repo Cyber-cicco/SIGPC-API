@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 public class ProjetService implements ProjetServiceInterface {
 
   private final ProjetRepository projetRepository;
-  private final ProjetTransformer projetTransformer;
   private final ModelMapper modelMapper;
 
   public List<ProjetDto> getAllProjets() {

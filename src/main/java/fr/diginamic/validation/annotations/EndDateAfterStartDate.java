@@ -14,7 +14,7 @@ public @interface EndDateAfterStartDate {
 
   String message() default "End date must be after start date";
 
-  String localDateFormat() default "uuuu-MM-dd";
+  //  String localDateFormat() default "uuuu-MM-dd";
 
   String startDateField();
 

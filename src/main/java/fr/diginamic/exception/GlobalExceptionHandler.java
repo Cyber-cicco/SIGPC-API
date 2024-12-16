@@ -34,9 +34,8 @@ public class GlobalExceptionHandler {
     ex.getBindingResult()
         .getFieldErrors()
         .forEach(
-            (fieldError) -> {
-              validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-            });
+            (fieldError) ->
+                validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage()));
     apiError.setValidationErrors(validationErrors);
     ApiResponse<ApiError> apiResponse = error("Données invalides", apiError);
 

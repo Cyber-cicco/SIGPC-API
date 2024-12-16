@@ -1,5 +1,6 @@
-package fr.diginamic.validation;
+package fr.diginamic.validation.annotations;
 
+import fr.diginamic.validation.validators.LocalDateValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

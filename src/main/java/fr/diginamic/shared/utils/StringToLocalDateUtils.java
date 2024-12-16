@@ -10,17 +10,11 @@ public class StringToLocalDateUtils {
   public static DateTimeFormatter getDateFormatter(String localDateFormat) {
     DateTimeFormatter formatter;
     try {
-      formatter =
-          //
-          // DateTimeFormatter.ofPattern(localDateFormat).withResolverStyle(ResolverStyle.STRICT);
-          DateTimeFormatter.ofPattern(localDateFormat);
+      formatter = DateTimeFormatter.ofPattern(localDateFormat);
     } catch (IllegalArgumentException e) {
-      //      formatter =
-      // DateTimeFormatter.ofPattern("uuuu-MM-dd").withResolverStyle(ResolverStyle.STRICT);
       formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
     }
     return formatter.withResolverStyle(ResolverStyle.STRICT);
-    //    return formatter;
   }
 
   public static boolean isValidDate(String dateString, DateTimeFormatter dateFormatter) {

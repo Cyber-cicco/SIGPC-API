@@ -1,7 +1,8 @@
-package fr.diginamic.validation;
+package fr.diginamic.validation.validators;
 
 import static fr.diginamic.shared.utils.StringToLocalDateUtils.getDateFormatter;
 
+import fr.diginamic.validation.annotations.CustomLocalDate;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
@@ -22,9 +23,6 @@ public class LocalDateValidator implements ConstraintValidator<CustomLocalDate, 
     DateTimeFormatter dateFormatter = getDateFormatter(localDateFormat);
 
     try {
-      //      sdf.setLenient(false);
-      //      sdf.parse(localDate.toString());
-
       dateFormatter.parse(localDate.toString());
     } catch (DateTimeParseException e) {
       System.err.println("DATE_TIME_PARSE_EXCEPTION");
