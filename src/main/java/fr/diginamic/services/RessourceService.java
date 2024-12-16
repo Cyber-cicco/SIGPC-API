@@ -17,7 +17,8 @@ public class RessourceService {
     @Transactional
     public void supprimerRessource(Long id) {
         Ressource ressourceToDelete = ressourceRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("La ressource avec l'id " + id + " n'existe pas"));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Le fichier n'existe pas (id : " + id + ")"));
 
         ressourceRepository.delete(ressourceToDelete);
     }
