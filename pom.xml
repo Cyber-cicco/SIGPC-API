@@ -205,7 +205,7 @@
                 <!--                <jdbc.user>${env.MYSQL_ADDON_USER}</jdbc.user>-->
                 <!--                <jdbc.pass>${env.MYSQL_ADDON_PASSWORD}</jdbc.pass>-->
                 <!--                <jdbc.dialect>org.hibernate.dialect.MySQLDialect</jdbc.dialect>-->
-                <brevo.api-key>${env.BREVO_API_KEY}</brevo.api-key>
+                <!--                <brevo.api-key>${BREVO_API_KEY}</brevo.api-key>-->
                 <!--                <jdbc.connections.max.active>2</jdbc.connections.max.active>-->
             </properties>
         </profile>
