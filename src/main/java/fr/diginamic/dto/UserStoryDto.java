@@ -23,8 +23,6 @@ public class UserStoryDto {
     private AvancementEnum avancement;
     private LocalDate dateFin;
     private LocalDate finEstime;
-    private List<BugDto> bugs;
-    private List<DocumentDto> documents;
     private Long projetId;
     private UtilisateurDto utilisateurAssigne;
 

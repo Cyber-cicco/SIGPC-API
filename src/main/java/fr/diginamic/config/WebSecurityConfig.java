@@ -66,6 +66,7 @@ public class WebSecurityConfig {
                         .requestMatchers(mvc.pattern("api/v1/equipes/**")).authenticated()
                         .requestMatchers(mvc.pattern("api/v1/projets/**")).authenticated()
                         .requestMatchers(mvc.pattern("api/v1/equipes")).authenticated()
+                        .requestMatchers(mvc.pattern("api/v1/user-stories")).authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable
                 )

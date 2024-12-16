@@ -10,7 +10,6 @@ import fr.diginamic.config.JwtService;
 import fr.diginamic.error.ApiError;
 import fr.diginamic.services.MailService;
 import fr.diginamic.shared.ErrorMessage;
-import fr.diginamic.validation.annotations.ValidPassword;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
