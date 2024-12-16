@@ -7,8 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
-import fr.diginamic.dto.DocumentDto;
-import fr.diginamic.dto.UtilisateurDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +21,8 @@ public class UserStoryDto {
     private LocalDate dateDebut;
     private AvancementEnum avancement;
     private LocalDate dateFin;
+    private LocalDate finEstime;
+    private ProjetDto projet;
     private List<BugDto> bugs;
     private List<DocumentDto> documents;
     private UtilisateurDto utilisateurAssigne;
