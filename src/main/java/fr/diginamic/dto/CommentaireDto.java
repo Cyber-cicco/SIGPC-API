@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import fr.diginamic.dto.CommentaireDto;
 import fr.diginamic.dto.CommentaireDto;
 import java.util.List;
-import fr.diginamic.dto.ProjetDto;
-import fr.diginamic.dto.UtilisateurDto;
-import fr.diginamic.dto.ReactionDto;
 
 @AllArgsConstructor
 @NoArgsConstructor

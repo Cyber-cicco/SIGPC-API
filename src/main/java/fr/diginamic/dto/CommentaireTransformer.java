@@ -3,7 +3,6 @@ package fr.diginamic.dto;
 
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Commentaire;
-import fr.diginamic.dto.CommentaireDto;
 
 @Component
 public class CommentaireTransformer {
