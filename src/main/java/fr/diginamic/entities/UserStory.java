@@ -31,7 +31,7 @@ public class UserStory {
     @Column(name = "date_debut")
     private LocalDate dateDebut;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "avancement", nullable = true)
     private AvancementEnum avancement;
 
