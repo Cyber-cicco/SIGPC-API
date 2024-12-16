@@ -31,6 +31,5 @@ brevo:
   key: ${BREVO_API_KEY}
 
 server:
-  port: 8090
-#  servlet:
-#    context-path: /api/v1
+  address: localhost
+  port: 8080
