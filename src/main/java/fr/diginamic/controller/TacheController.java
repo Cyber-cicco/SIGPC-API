@@ -42,14 +42,14 @@ public class TacheController {
             @CookieValue(AUTH_TOKEN) String token,
             @RequestBody @Valid TacheDto tacheDto
     ) {
-        checkIfUserIsAllowedToChangeTask(token, tacheDto);
+        checkIfUserIsAllowedToChangeTask(token, tacheDto.getUserStoryId());
         var tache  = tacheService.creerTache(tacheDto);
         return ResponseEntity.ok(success("Tâche créée avec succès", tacheTransformer.totacheDto(tache)));
     }
 
-    private AuthenticationInfos checkIfUserIsAllowedToChangeTask(String token, TacheDto tacheDto){
+    private AuthenticationInfos checkIfUserIsAllowedToChangeTask(String token, Long userStoryId){
         var userInfos = securityService.getAuthenticationInfos(token);
-        var userStory = userStoryService.findUsById(tacheDto.getUserStoryId());
+        var userStory = userStoryService.findUsById(userStoryId);
         var projetUtilisateur = securityService.checkIfUserMemberOfProject(userInfos.getId(), userStory.getProjet().getId());
         securityService.shouldNotBeVisiteurOfProject(projetUtilisateur);
         return userInfos;
@@ -61,9 +61,19 @@ public class TacheController {
             @RequestBody @Valid TacheDto tacheDto,
             @PathVariable Long id
     ) {
-        checkIfUserIsAllowedToChangeTask(token, tacheDto);
+        checkIfUserIsAllowedToChangeTask(token, tacheDto.getUserStoryId());
         var tache = tacheService.modifierTache(tacheDto, id);
         return ResponseEntity.ok(success("Tâche modifiée avec succès", tacheTransformer.totacheDto(tache)));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> supprimerTache(
+            @CookieValue(AUTH_TOKEN) String token,
+            @PathVariable Long id
+    ) {
+        var tache = tacheService.getById(id);
+        checkIfUserIsAllowedToChangeTask(token, tache.getUserStory().getId());
+        tacheService.supprimerTache(id);
+        return ResponseEntity.ok(success("Tâche supprimée avec succès"));
     }
 
 

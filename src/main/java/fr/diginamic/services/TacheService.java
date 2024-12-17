@@ -31,4 +31,13 @@ public class TacheService {
         tache.setDone(dto.isDone());
         return tacheRepository.save(tache);
     }
+
+    public void supprimerTache(Long id) {
+        tacheRepository.delete(tacheRepository.getReferenceById(id));
+    }
+
+    public Tache getById(Long id) {
+        return tacheRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+    }
 }

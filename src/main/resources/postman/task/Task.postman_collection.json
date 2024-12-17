@@ -64,6 +64,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "TASK_03 Delete task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/taches/1",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"taches",
+						"1"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
