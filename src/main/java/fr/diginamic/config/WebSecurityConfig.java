@@ -59,18 +59,20 @@ public class WebSecurityConfig {
       @Qualifier(value = "corsConfigurationSource") CorsConfigurationSource configurationSource)
       throws Exception {
     http.authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/login")).permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**")).permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request")).permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/password/change/**")).permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/projets/**")).permitAll()
-                    .requestMatchers("/error").permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/equipes/**")).authenticated()
-                    .requestMatchers(mvc.pattern("api/v1/equipes")).authenticated()
-                    .requestMatchers(mvc.pattern("api/v1/user-stories")).authenticated()
-                    .requestMatchers(mvc.pattern("api/v1/user-stories/**")).authenticated()
+                    auth -> auth
+                            .requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
+                            .requestMatchers(mvc.pattern("api/v1/auth/login")).permitAll()
+                            .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**")).permitAll()
+                            .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request")).permitAll()
+                            .requestMatchers(mvc.pattern("api/v1/auth/password/change/**")).permitAll()
+                            .requestMatchers(mvc.pattern("api/v1/projets/**")).permitAll()
+                            .requestMatchers("/error").permitAll()
+                            .requestMatchers(mvc.pattern("api/v1/equipes/**")).authenticated()
+                            .requestMatchers(mvc.pattern("api/v1/equipes")).authenticated()
+                            .requestMatchers(mvc.pattern("api/v1/taches/**")).authenticated()
+                            .requestMatchers(mvc.pattern("api/v1/taches")).authenticated()
+                            .requestMatchers(mvc.pattern("api/v1/user-stories")).authenticated()
+                            .requestMatchers(mvc.pattern("api/v1/user-stories/**")).authenticated()
             )
         .csrf(AbstractHttpConfigurer::disable)
         .cors(

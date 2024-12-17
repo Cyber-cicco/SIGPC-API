@@ -20,8 +20,6 @@ public class TacheTransformer {
         dto.setDateDebut(entity.getDateDebut());
         dto.setDateFin(entity.getDateFin());
         dto.setFinEstime(entity.getFinEstime());
-
-        // TODO : implémenter les méthodes pour les champs complexes
         return dto;
     }
 
@@ -36,7 +34,6 @@ public class TacheTransformer {
         entity.setFinEstime(dto.getFinEstime());
         entity.setUserStory(userStoryRepository.getReferenceById(dto.getUserStoryId()));
 
-        // TODO : implémenter les méthodes pour les champs complexes
         return entity;
     }
 }
