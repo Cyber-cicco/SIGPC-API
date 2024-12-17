@@ -24,7 +24,7 @@ logging:
   level:
     org.springframework: @spring.log-level@
   file:
-    path: "~/logs.txt"
+    path: "./logs"
 jwt:
   cookie: "AUTH-TOKEN"
   expires_in: 864000
@@ -37,4 +37,4 @@ brevo:
 
 server:
   address: localhost
-  port: 8080
+  port: 8090
