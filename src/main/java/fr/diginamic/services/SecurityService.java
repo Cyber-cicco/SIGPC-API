@@ -6,7 +6,7 @@ import fr.diginamic.entities.enums.EquipeRoleEnum;
 import fr.diginamic.entities.enums.ProjetRoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
 import fr.diginamic.equipe.EquipeUtilisateurRepository;
-import fr.diginamic.repository.ProjetUtilisateurRepository;
+import fr.diginamic.projet.ProjetUtilisateurRepository;
 import fr.diginamic.shared.AuthenticationInfos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

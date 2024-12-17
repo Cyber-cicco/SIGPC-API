@@ -1,4 +1,4 @@
-package fr.diginamic.repository;
+package fr.diginamic.tache;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

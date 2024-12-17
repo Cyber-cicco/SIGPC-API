@@ -1,4 +1,4 @@
-package fr.diginamic.repository;
+package fr.diginamic.utilisateur;
 
 import fr.diginamic.entities.enums.TypeInvitationEnum;
 import org.springframework.data.jpa.repository.JpaRepository;

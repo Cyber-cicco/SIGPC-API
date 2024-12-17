@@ -1,5 +1,6 @@
-package fr.diginamic.dto;
+package fr.diginamic.tache;
 
+import fr.diginamic.tache.TacheDto;
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Tache;
 import fr.diginamic.userstory.UserStoryRepository;

@@ -6,7 +6,6 @@ import fr.diginamic.equipe.EquipeRepository;
 import fr.diginamic.exception.ResourceNotFoundException;
 import java.util.List;
 
-import fr.diginamic.repository.ProjetUtilisateurRepository;
 import fr.diginamic.utilisateur.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

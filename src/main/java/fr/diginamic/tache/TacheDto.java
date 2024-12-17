@@ -1,4 +1,4 @@
-package fr.diginamic.dto;
+package fr.diginamic.tache;
 
 import java.time.LocalDate;
 import java.util.Date;

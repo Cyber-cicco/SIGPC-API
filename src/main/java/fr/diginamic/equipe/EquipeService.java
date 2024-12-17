@@ -5,7 +5,7 @@ import fr.diginamic.entities.EquipeUtilisateur;
 import fr.diginamic.entities.Invitation;
 import fr.diginamic.entities.enums.EquipeRoleEnum;
 import fr.diginamic.entities.enums.TypeInvitationEnum;
-import fr.diginamic.repository.InvitationRepository;
+import fr.diginamic.utilisateur.InvitationRepository;
 import fr.diginamic.utilisateur.UtilisateurRepository;
 import fr.diginamic.shared.AuthenticationInfos;
 import jakarta.persistence.EntityNotFoundException;

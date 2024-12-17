@@ -1,10 +1,9 @@
-package fr.diginamic.controller;
+package fr.diginamic.tache;
 
 import static fr.diginamic.config.Constants.API_VERSION_1;
 import static fr.diginamic.config.Constants.AUTH_TOKEN;
 import static fr.diginamic.shared.ResponseUtil.success;
 
-import fr.diginamic.dto.TacheTransformer;
 import fr.diginamic.services.SecurityService;
 import fr.diginamic.shared.ApiResponse;
 import fr.diginamic.shared.AuthenticationInfos;
@@ -12,9 +11,7 @@ import fr.diginamic.userstory.UserStoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import fr.diginamic.dto.TacheDto;
 import org.springframework.http.ResponseEntity;
-import fr.diginamic.services.TacheService;
 
 @RestController
 @RequiredArgsConstructor

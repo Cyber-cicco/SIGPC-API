@@ -1,7 +1,7 @@
 package fr.diginamic.userstory;
 
 import fr.diginamic.projet.ProjetRepository;
-import fr.diginamic.repository.TacheRepository;
+import fr.diginamic.tache.TacheRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
