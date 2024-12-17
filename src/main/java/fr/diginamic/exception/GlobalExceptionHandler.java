@@ -7,24 +7,25 @@ import fr.diginamic.shared.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-  private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+  //  private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @ExceptionHandler({MethodArgumentNotValidException.class})
   public ResponseEntity<ApiResponse<ApiError>> handleMethodArgumentNotValidException(
       MethodArgumentNotValidException ex, HttpServletRequest request) {
 
-    LOGGER.error("an error occurred {}", ex.getMessage());
-    System.err.println("ERREUR DE VALIDATION");
+    //    LOGGER.error("an error occurred {}", ex.getMessage());
+    //    System.err.println("ERREUR DE VALIDATION");
+    log.error("ERREUR DE VALIDATION");
 
     ApiError apiError =
         new ApiError(request.getMethod(), "Erreur de validation", request.getServletPath());

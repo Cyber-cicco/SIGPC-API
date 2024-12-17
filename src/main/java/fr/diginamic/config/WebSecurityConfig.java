@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -54,7 +52,6 @@ public class WebSecurityConfig {
    * @throws Exception
    */
   @Bean
-  @Order(1)
   public SecurityFilterChain filterChain(
       HttpSecurity http,
       JwtAuthenticationFilter jwtAuthenticationFilter,
@@ -62,23 +59,27 @@ public class WebSecurityConfig {
       @Qualifier(value = "corsConfigurationSource") CorsConfigurationSource configurationSource)
       throws Exception {
     http.authorizeHttpRequests(
-            auth -> {
-              auth.requestMatchers(mvc.pattern("api/v1/auth/compte"))
-                  .permitAll()
-                  .requestMatchers(mvc.pattern("api/v1/auth/login"))
-                  .permitAll()
-                  .requestMatchers(mvc.pattern("api/v1/auth/email/verify" + "/**"))
-                  .permitAll()
-                  .requestMatchers(mvc.pattern("api/v1/auth/password" + "-change/send-request"))
-                  .permitAll()
-                  .requestMatchers(mvc.pattern("api/v1/auth/password/change/**"))
-                  .permitAll();
-
-              auth.requestMatchers(mvc.pattern("api/v1/equipes/**"))
-                  .authenticated()
-                  .requestMatchers(mvc.pattern("api/v1/equipes"))
-                  .authenticated();
-            })
+            auth ->
+                auth.requestMatchers(mvc.pattern("api/v1/auth/compte"))
+                    .permitAll()
+                    .requestMatchers(mvc.pattern("api/v1/auth/login"))
+                    .permitAll()
+                    .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**"))
+                    .permitAll()
+                    .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request"))
+                    .permitAll()
+                    .requestMatchers(mvc.pattern("api/v1/auth/password/change/**"))
+                    .permitAll()
+                    .requestMatchers(mvc.pattern("api/v1/projets/**"))
+                    .permitAll()
+                    .requestMatchers("/error")
+                    .permitAll()
+                    .requestMatchers(mvc.pattern("api/v1/equipes/**"))
+                    .authenticated()
+                    .requestMatchers(mvc.pattern("api/v1/equipes"))
+                    .authenticated()
+                    .requestMatchers(mvc.pattern("api/v1/user-stories"))
+                    .authenticated())
         .csrf(AbstractHttpConfigurer::disable)
         .cors(
             httpSecurityCorsConfigurer ->
@@ -89,23 +90,6 @@ public class WebSecurityConfig {
                 logoutConfigurer.addLogoutHandler(customLogoutHandler).logoutUrl("/logout"))
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
-  }
-
-  @Bean
-  @Order(0)
-  SecurityFilterChain projetsSecurityFilterChain(HttpSecurity http) throws Exception {
-    return http.securityMatcher("/api/v1/projets/**")
-        .authorizeHttpRequests(
-            auth -> {
-              auth.requestMatchers("/api/v1/projets/**").permitAll();
-              auth.requestMatchers("/error").permitAll();
-            })
-        .csrf(
-            csrf ->
-                csrf.ignoringRequestMatchers(
-                    AntPathRequestMatcher.antMatcher("/api/v1/projets/**")))
-        .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-        .build();
   }
 
   /**
