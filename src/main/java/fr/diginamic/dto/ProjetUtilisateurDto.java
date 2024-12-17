@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import fr.diginamic.dto.UtilisateurDto;
-import fr.diginamic.dto.ProjetDto;
+import fr.diginamic.projet.ProjetDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,9 +12,8 @@ import fr.diginamic.dto.ProjetDto;
 @Builder
 public class ProjetUtilisateurDto {
 
-    private Long id;
-    private String role;
-    private UtilisateurDto utilisateur;
-    private ProjetDto projet;
-
+  private Long id;
+  private String role;
+  private UtilisateurDto utilisateur;
+  private ProjetDto projet;
 }

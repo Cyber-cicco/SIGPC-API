@@ -33,11 +33,11 @@ public class SecurityService {
 
     /**
      * Renvoie une exception dans le cas où l'utilisateur n'est pas propriétaire du groupe
-     * @param userInfos les informations de l'utilisateur connecté
+     * @param userId l'identifiant unique de l'utilisateur connecté
      * @param groupId l'indentifiant du groupe auquel il est rattaché
      */
-    public void checkIfUserProprietaireInGroup(AuthenticationInfos userInfos, Long groupId) {
-        var exists = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_IdAndRole(userInfos.getId(), groupId, EquipeRoleEnum.PROPRIETAIRE);
+    public void checkIfUserProprietaireInGroup(Long userId, Long groupId) {
+        var exists = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_IdAndRole(userId, groupId, EquipeRoleEnum.PROPRIETAIRE);
         if (!exists) {
             throw new UnauthorizedException();
         }

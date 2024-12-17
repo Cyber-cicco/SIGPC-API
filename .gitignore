@@ -4,9 +4,14 @@
 
 # SIGPC API
 jpa
+sigpc-db-test.sql
+sigpc.iml
 target
 templates
+sigpc.iml
+sigpc-db-test.sql
 
 # Logs
 *.log
 /~/logs.txt
+logs/

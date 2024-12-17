@@ -8,6 +8,7 @@ import fr.diginamic.dto.SimpleInvitationDto;
 import fr.diginamic.entities.Equipe;
 import fr.diginamic.services.MailService;
 import fr.diginamic.services.SecurityService;
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -94,9 +95,74 @@ public class EquipeController {
     @PatchMapping("/{groupId}/member/{memberId}/role")
     public ResponseEntity<?> changeRoleOfMember(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody RoleEquipeDto roleEquipeDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
-        securityService.checkIfUserProprietaireInGroup(userInfos, groupId);
+        securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
         var utilisateurEquipe = equipeService.changeRole(memberId, groupId, roleEquipeDto);
         return ResponseEntity.ok(new RoleEquipeDto(utilisateurEquipe.getRole()));
+    }
+
+    /**
+     * Envoie une demande d'appartenance à un groupe
+     * @param token le jwt
+     * @param groupId le groupe auquel l'utilisateur souhaite appartenir
+     * @return un message indiquant que la demande a été faite
+     * @throws ApiException si le mail n'a pas pu être envoyé
+     */
+    @PostMapping("/{groupId}/join")
+    public ResponseEntity<?> askToJoinGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId) throws ApiException {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        var emails = equipeService.addJoinGroupDemand(userInfos, groupId);
+        mailService.sendDemandeAppartenance(emails.senderEmail(), emails.recipientEmail());
+        return ResponseEntity.ok(Map.of("message", "La demande a été envoyée"));
+    }
+
+    /**
+     * Permet de partir d'un groupe
+     * @param token le jwt
+     * @param groupId le groupe que l'on souhaite quitter
+     * @return une réponse indiquant que l'on a bien quitté le groupe
+     */
+    @PatchMapping("/{groupId}/leave")
+    public ResponseEntity<?> leaveGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId) {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
+        equipeService.leaveGroup(userInfos.getId(), groupId);
+        return ResponseEntity.ok(Map.of("message", "Vous avez bien quitter le groupe"));
+    }
+
+    /**
+     * Permet de supprimer un utilisateur d'un groupe
+     * @param token le jwt
+     * @param memberId le membre à supprimer
+     * @param groupId l'identifiant du groupe auquel vous appartenez
+     * @return une réponse indiquant la suppression de l'utilisateur
+     */
+    @DeleteMapping("/{groupId}/member/{memberId}")
+    public ResponseEntity<?> removeFromGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long memberId, @PathVariable Long groupId) {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
+        securityService.checkIfUserAllowedInGroup(memberId, groupId);
+        if (userInfos.getId().equals(memberId)) {
+            throw new ValidationException("Vous ne pouvez vous supprimer vous-même. Utiliser l'option pour partir du groupe");
+        }
+        equipeService.leaveGroup(memberId, groupId);
+        return ResponseEntity.ok(Map.of("message", "Vous avez bien supprimé l'utilisateur du groupe"));
+    }
+
+    /**
+     * Permet d'accepter la demande pour rejoindre un groupe
+     * @param token le jwt
+     * @param groupId l'identifiant du groupe à rejoindre
+     * @param memberId l'identifiant de l'utilisateur que l'on accepte
+     * @param accepted si l'on accepte ou non
+     * @return un message retournant le status d'acceptation de la demande
+     */
+    @PatchMapping("/{groupId}/join-request/member/{memberId}/{accepted}")
+    public ResponseEntity<?> acceptJoinDemand(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @PathVariable Boolean accepted) throws ApiException {
+        var userInfos = securityService.getAuthenticationInfos(token);
+        securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
+        var email = equipeService.accepteJoinDemand(memberId, groupId, accepted);
+        mailService.sendAcceptJoin(email, accepted);
+        return ResponseEntity.ok(Map.of("message", accepted ? "Vous avez bien accepté la demande" : "Vous avez bien refusé la demande"));
     }
 
 }

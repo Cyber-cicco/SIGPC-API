@@ -59,6 +59,7 @@ public class EquipeService {
         if (invitationDto.getEmail().equals(userInfos.getEmail())){
             throw new ValidationException("Vous ne pouvez pas vous inviter vous-même");
         }
+        throwIfAlreadyInGroup(userInfos.getId(), groupId);
         var utilisateur = utilisateurRepository.findUtilisateurByEmail(invitationDto.getEmail())
                 .orElseThrow(EntityNotFoundException::new);
         var group = equipeRepository.getReferenceById(groupId);
@@ -89,7 +90,7 @@ public class EquipeService {
      */
     @Transactional
     public void accepteInvite(AuthenticationInfos userInfos, Long groupId, Boolean accepted) {
-        var invitation = invitationRepository.findFirstByUtilisateur_IdAndEquipe_IdOrderByDateEmissionDesc(userInfos.getId(), groupId)
+        var invitation = invitationRepository.findFirstByUtilisateur_IdAndEquipe_IdAndTypeInvitationOrderByDateEmissionDesc(userInfos.getId(), groupId, TypeInvitationEnum.DEMANDE_EQUIPE)
                 .orElseThrow(EntityNotFoundException::new);
         if (LocalDateTime.now().isAfter(invitation.getDateEmission().plusDays(7))) {
             throw new ValidationException("L'invitation a expiré");
@@ -126,5 +127,81 @@ public class EquipeService {
         }
         equipeUtilisateur.setRole(roleEquipeDto.getRole());
         return equipeUtilisateurRepository.save(equipeUtilisateur);
+    }
+
+    /**
+     * Permet de quitter le groupe
+     * @param userId l'identifiant de l'utilisateur
+     * @param groupId l'identifiant du groupe à quitter
+     */
+    public void leaveGroup(Long userId, Long groupId) {
+        var group = equipeRepository.findById(groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        if (group.getAdmin().getId().equals(userId)) {
+            throw new ValidationException("Vous ne pouvez quitter un groupe dont vous êtes l'administrateur ou supprimer l'administrateur. Transférez les droits d'administration ou supprimez le groupe");
+        }
+        var equipeUtilisateur = equipeUtilisateurRepository.findByUtilisateur_IdAndEquipe_Id(userId, groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        equipeUtilisateurRepository.delete(equipeUtilisateur);
+
+    }
+
+    /**
+     * Permet de définir le status d'acceptation d'une demande pour rejoindre un groupe
+     * @param memberId le membre souhaitant rejoindre le groupe
+     * @param groupId l'identifiant du groupe que le membre souhaitait rejoindre
+     * @param accepted le status de l'acceptation
+     * @return l'email de l'utilisateur que l'on a accepte
+     */
+    public String accepteJoinDemand(Long memberId, Long groupId, Boolean accepted) {
+        var demande = invitationRepository
+                .findFirstByUtilisateur_IdAndEquipe_IdAndTypeInvitationOrderByDateEmissionDesc(memberId, groupId, TypeInvitationEnum.DEMANDE_UTILISATEUR)
+                .orElseThrow(EntityNotFoundException::new);
+        var group = equipeRepository.getReferenceById(groupId);
+        var utilisateur = utilisateurRepository.findById(memberId)
+                .orElseThrow(EntityNotFoundException::new);
+        demande.setDateAcceptation(LocalDateTime.now());
+        demande.setAcceptee(accepted);
+        invitationRepository.save(demande);
+        if (accepted){
+            var groupeUtilisateur = EquipeUtilisateur.builder()
+                    .utilisateur(utilisateur)
+                    .equipe(group)
+                    .role(EquipeRoleEnum.MEMBRE)
+                    .build();
+            equipeUtilisateurRepository.save(groupeUtilisateur);
+        }
+        return utilisateur.getEmail();
+    }
+
+    public record DemandeAjoutEquipe(String senderEmail, String recipientEmail){}
+
+    private void throwIfAlreadyInGroup(Long userId, Long groupId) throws ValidationException {
+        var alreadyInGroup = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_Id(userId, groupId);
+        if (alreadyInGroup) {
+            throw new ValidationException("Vous êtes déjà membre du groupe");
+        }
+    }
+
+    /**
+     * Permet d'ajouter une demande d'appartenance à un groupe
+     * @param userInfos les informations de l'utilisateur connecté
+     * @param groupId le groupe qu'il souhaite rejoindre
+     * @return l'email de l'administrateur
+     */
+    public DemandeAjoutEquipe addJoinGroupDemand(AuthenticationInfos userInfos, Long groupId) {
+        var utilisateur = utilisateurRepository.getReferenceById(userInfos.getId());
+        var group = equipeRepository.findById(groupId)
+                .orElseThrow(EntityNotFoundException::new);
+        throwIfAlreadyInGroup(userInfos.getId(), groupId);
+        var invitation = Invitation.builder()
+                .dateEmission(LocalDateTime.now())
+                .acceptee(false)
+                .equipe(group)
+                .utilisateur(utilisateur)
+                .typeInvitation(TypeInvitationEnum.DEMANDE_UTILISATEUR)
+                .build();
+        invitationRepository.save(invitation);
+        return new DemandeAjoutEquipe(utilisateur.getEmail(), group.getAdmin().getEmail());
     }
 }

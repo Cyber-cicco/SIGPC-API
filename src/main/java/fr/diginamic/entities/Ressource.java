@@ -1,5 +1,6 @@
 package fr.diginamic.entities;
 
+import fr.diginamic.projet.Projet;
 import jakarta.persistence.*;
 import lombok.*;
 
