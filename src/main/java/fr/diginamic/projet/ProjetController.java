@@ -4,7 +4,7 @@ import static fr.diginamic.config.Constants.API_VERSION_1;
 import static fr.diginamic.shared.ResponseUtil.success;
 
 import fr.diginamic.shared.ApiResponse;
-import jakarta.validation.Valid;
+import fr.diginamic.validation.sequences.NullEmptyBlankSequence;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
+// @Validated(value = NullEmptyBlankSequence.class)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_VERSION_1 + "/projets")
@@ -39,7 +40,7 @@ public class ProjetController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public ResponseEntity<ApiResponse<ProjetDto>> createProjet(
-      @Valid @RequestBody ProjetDto projetDto) {
+      @Validated(value = NullEmptyBlankSequence.class) @RequestBody ProjetDto projetDto) {
     ProjetDto createdProjetDto = projetService.createProjet(projetDto);
     ApiResponse<ProjetDto> apiResponse = success("Projet créé", createdProjetDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
