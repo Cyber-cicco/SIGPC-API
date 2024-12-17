@@ -1,8 +1,7 @@
-package fr.diginamic.dto;
+package fr.diginamic.userstory;
 
 import fr.diginamic.entities.enums.AvancementEnum;
 import fr.diginamic.projet.ProjetRepository;
-import fr.diginamic.repository.UserStoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.UserStory;

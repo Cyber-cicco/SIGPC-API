@@ -1,15 +1,11 @@
-package fr.diginamic.services;
+package fr.diginamic.userstory;
 
-import fr.diginamic.projet.Projet;
 import fr.diginamic.projet.ProjetRepository;
 import fr.diginamic.repository.TacheRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import fr.diginamic.dto.UserStoryDto;
-import fr.diginamic.dto.UserStoryTransformer;
 import fr.diginamic.entities.UserStory;
-import fr.diginamic.repository.UserStoryRepository;
 
 import java.time.LocalDateTime;
 

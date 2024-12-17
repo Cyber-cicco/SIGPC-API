@@ -1,4 +1,4 @@
-package fr.diginamic.dto;
+package fr.diginamic.userstory;
 
 import fr.diginamic.entities.enums.AvancementEnum;
 import fr.diginamic.utilisateur.UtilisateurDto;

@@ -1,6 +1,6 @@
-package fr.diginamic.controller;
+package fr.diginamic.userstory;
 
-import fr.diginamic.dto.UserStoryTransformer;
+import fr.diginamic.userstory.UserStoryTransformer;
 import fr.diginamic.services.SecurityService;
 import fr.diginamic.shared.ApiResponse;
 import jakarta.validation.Valid;
@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import fr.diginamic.dto.UserStoryDto;
+import fr.diginamic.userstory.UserStoryDto;
 import org.springframework.http.ResponseEntity;
-import fr.diginamic.services.UserStoryService;
+import fr.diginamic.userstory.UserStoryService;
 import org.springframework.web.bind.annotation.*;
 
 import static fr.diginamic.config.Constants.API_VERSION_1;

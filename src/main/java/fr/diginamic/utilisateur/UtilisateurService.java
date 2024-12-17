@@ -7,13 +7,10 @@ import fr.diginamic.entities.TentativeChangementMdp;
 import fr.diginamic.entities.Utilisateur;
 import fr.diginamic.entities.enums.RoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
-import fr.diginamic.repository.TentativeSupressionMdpRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import fr.diginamic.repository.UtilisateurRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
