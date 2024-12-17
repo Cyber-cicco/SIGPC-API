@@ -38,4 +38,14 @@ public class UserStoryService {
         userStory.setDeletedAt(LocalDateTime.now());
         userStoryRepository.save(userStory);
     }
+
+    public UserStory change(UserStory userStory, UserStoryDto userStoryDto) {
+        userStory.setLibelle(userStoryDto.getLibelle());
+        userStory.setDescription(userStoryDto.getDescription());
+        userStory.setAvancement(userStoryDto.getAvancement());
+        userStory.setDateDebut(userStoryDto.getDateDebut());
+        userStory.setFinEstime(userStoryDto.getFinEstime());
+        userStory.setDateFin(userStoryDto.getDateFin());
+        return userStoryRepository.save(userStory);
+    }
 }

@@ -10,6 +10,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Repeatable(value = EndDateAfterStartDate.List.class)
 public @interface EndDateAfterStartDate {
 
   String message() default "End date must be after start date";

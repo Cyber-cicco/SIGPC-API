@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "2d2575c6-ea14-471f-a7a6-f4720aff6ada",
+		"name": "UserStory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38326782"
+	},
+	"item": [
+		{
+			"name": "US_1 - Create user story",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"libelle\": \"Digérer le repas de noël\",\n    \"description\": \"Je suis un test\",\n    \"dateDebut\": \"2024-01-12\",\n    \"dateFin\": \"2024-01-23\",\n    \"projetId\" : 1,\n    \"avancement\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/user-stories",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"user-stories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US_2 - Delete user story",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/user-stories/1",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"user-stories",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "US_3 - Modify user story",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"libelle\": \"Digérer le burger\",\n        \"code\": \"Projet 1 - SIG #3\",\n        \"description\": \"J'ai très envie de dormir\",\n        \"dateDebut\": null,\n        \"avancement\": null,\n        \"dateFin\": null,\n        \"finEstime\": null,\n        \"projetId\": 1\n\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/user-stories",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"user-stories"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
