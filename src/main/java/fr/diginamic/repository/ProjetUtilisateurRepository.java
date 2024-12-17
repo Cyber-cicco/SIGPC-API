@@ -7,4 +7,5 @@ import fr.diginamic.entities.ProjetUtilisateur;
 
 public interface ProjetUtilisateurRepository extends JpaRepository<ProjetUtilisateur, Long>  {
 
+    Optional<ProjetUtilisateur> findByUtilisateur_IdAndProjet_Id(Long utilisateurId, Long projetId);
 }

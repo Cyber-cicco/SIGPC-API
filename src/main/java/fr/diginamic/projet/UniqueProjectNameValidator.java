@@ -11,8 +11,6 @@ public class UniqueProjectNameValidator implements ConstraintValidator<UniquePro
 
   @Override
   public boolean isValid(String nomProjet, ConstraintValidatorContext constraintValidatorContext) {
-
-    Projet inDb = projetRepository.findByNom(nomProjet);
-    return inDb == null;
+    return projetRepository.existsByNom(nomProjet);
   }
 }

@@ -1,6 +1,5 @@
 package fr.diginamic.entities;
 
-import fr.diginamic.dto.EquipeDto;
 import fr.diginamic.entities.enums.EquipeRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;

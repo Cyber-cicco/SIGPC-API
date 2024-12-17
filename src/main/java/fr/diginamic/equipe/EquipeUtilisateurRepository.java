@@ -1,4 +1,4 @@
-package fr.diginamic.repository;
+package fr.diginamic.equipe;
 
 import fr.diginamic.entities.EquipeUtilisateur;
 import fr.diginamic.entities.enums.EquipeRoleEnum;

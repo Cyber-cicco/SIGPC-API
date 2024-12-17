@@ -1,4 +1,4 @@
-package fr.diginamic.dto;
+package fr.diginamic.equipe;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,18 +14,16 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EquipeDto {
 
-  private Long id;
+    private Long id;
+    @NotBlank
+    @Size(min = 3, max = 120)
+    private String nom;
+    @Email
+    @NotBlank
+    @Size(max = 255)
+    private String contact;
+    @NotBlank
+    @Size(min = 5, max = 255)
+    private String description;
 
-  @NotBlank
-  @Size(min = 3, max = 120)
-  private String nom;
-
-  @Email
-  @NotBlank
-  @Size(max = 255)
-  private String contact;
-
-  @NotBlank
-  @Size(min = 5, max = 255)
-  private String description;
 }

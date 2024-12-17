@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: sigpc-api
   datasource:
     url: @jdbc.url@
     username: @jdbc.user@
@@ -8,33 +10,31 @@ spring:
     show-sql: false
     database: mysql
     generate-ddl: true
-  brevo:
-    key: @brevo.api-key@
 
-    # TODO : à supprimer (2 lignes), options non reconnues
-  #    url: https://api.brevo.com/v3/smtp/email
-  #    enabled: true
+    hibernate:
+      ddl-auto: update
 
   servlet:
     multipart:
       max-file-size: "10MB"
       max-request-size: "10MB"
+  brevo:
+    key: @brevo.api-key@
 logging:
   level:
     org.springframework: @spring.log-level@
   file:
-    path: "~/logs.txt"
+    path: "./logs"
 jwt:
   cookie: "AUTH-TOKEN"
   expires_in: 864000
   secret: "3dDsYHtBkTz0gAoPmPMwL2ksjVfVyR2Js0OsaVTx3RobUGI6YGM3gWJRFhPG"
 
-# TODO : à supprimer (4 lignes), options non reconnues
-#brevo:
-#  enabled: true
-#  url: https://api.brevo.com/v3/smtp/email
-#  key: ${BREVO_API_KEY}
+brevo:
+  enabled: true
+  url: https://api.brevo.com/v3/smtp/email
+  key: ${BREVO_API_KEY}
 
 server:
   address: localhost
-  port: 8080
+  port: 8090
