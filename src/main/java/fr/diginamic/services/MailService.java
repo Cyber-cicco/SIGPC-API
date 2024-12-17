@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 @Slf4j
 public class MailService {
-  @Value("${spring.brevo.key}")
+  @Value("${brevo.key}")
   private String brevoApiKey;
 
   /**
