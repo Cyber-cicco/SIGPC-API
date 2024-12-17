@@ -3,11 +3,8 @@ package fr.diginamic.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
 import fr.diginamic.dto.SprintDto;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import fr.diginamic.services.SprintService;
 
@@ -27,18 +24,15 @@ public class SprintController {
      * Informations à mettre dans le body :
      * - dateDebut
      * - dateFin
+     * - userStories
      * - sprintParJour (optionnel)
      * - projetId (optionnel)
-     * - userStories (optionnel)
      * 
      * @param sprintDto
      * @return
      */
     @PostMapping("/creer")
     public ResponseEntity<SprintDto> creerSprint(@RequestBody SprintDto sprintDto) {
-        if (sprintDto.getDateDebut() == null || sprintDto.getDateFin() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Date de début et de fin obligatoires");
-        }
         SprintDto sprint = sprintService.creerSprint(sprintDto);
         return ResponseEntity.ok(sprint);
     }
