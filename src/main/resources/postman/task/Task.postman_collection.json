@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "12078a08-31cf-49bd-82b7-bc385f844a0f",
+		"name": "Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38326782"
+	},
+	"item": [
+		{
+			"name": "TASK_01 Create task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nom\" : \"Manger le bourger\",\n    \"userStoryId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/taches",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"taches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TASK_02 Modify task",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"nom\": \"Manger le bourger\",\n        \"description\": null,\n        \"done\": true,\n        \"dateDebut\": null,\n        \"dateFin\": \"2025-05-05\",\n        \"finEstime\": null,\n        \"userStoryId\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/taches/1",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{domainName}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{apiVersion}}",
+						"taches",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
