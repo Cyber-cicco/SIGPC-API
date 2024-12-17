@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
+// @Validated(value = NullEmptyBlankSequence.class)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_VERSION_1 + "/projets")

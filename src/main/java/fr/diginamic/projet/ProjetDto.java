@@ -29,8 +29,14 @@ public class ProjetDto {
 
   private Long id;
 
+  //  @NotNull(message = "Le nom du projet ne doit pas être null", groups = NotNullGroup.class)
+  //  @NotEmpty(message = "Le nom du projet ne doit pas être vide", groups = NotEmptyGroup.class)
+  //  @NotBlank(
+  //      message = "Le nom du projet ne doit pas avoir que des espaces",
+  //      groups = NotBlankGroup.class)
   @NotNull(message = "Le nom du projet ne doit pas être null")
-  @NotBlank(message = "Le nom du projet ne doit pas être vide")
+  //  @NotEmpty(message = "Le nom du projet ne doit pas être vide")
+  @NotBlank(message = "Le nom du projet ne doit pas avoir que des espaces")
   @Size(min = 5, max = 100, message = "Le nom du projet doit avoir entre 5 et 100 caractères")
   @UniqueProjectName
   private String nom;

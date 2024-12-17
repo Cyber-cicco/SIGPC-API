@@ -12,12 +12,14 @@ import java.util.Map;
 import jakarta.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
   private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -26,8 +28,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiResponse<ApiError>> handleMethodArgumentNotValidException(
       MethodArgumentNotValidException ex, HttpServletRequest request) {
 
-    LOGGER.error("an error occurred {}", ex.getMessage());
-    System.err.println("ERREUR DE VALIDATION");
+    log.error("ERREUR DE VALIDATION");
 
     ApiError apiError =
         new ApiError(request.getMethod(), "Erreur de validation", request.getServletPath());
@@ -53,10 +54,12 @@ public class GlobalExceptionHandler {
     ApiResponse<ApiError> apiResponse = error(message, apiError);
     return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
   }
+
   @ExceptionHandler(UnauthorizedException.class)
   public ResponseEntity<ApiResponse<ApiError>> handleUnauthorizedException(UnauthorizedException ex) {
     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error("unauthorized", null));
   }
+
   @ExceptionHandler(ValidationException.class)
   public ResponseEntity<ApiResponse<ApiError>> handleValidationException(ValidationException ex, HttpServletRequest req) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error("Validation error", ApiError.builder()
@@ -66,6 +69,7 @@ public class GlobalExceptionHandler {
             .validationErrors(Map.of("error", ex.getMessage()))
             .build()));
   }
+
   @ExceptionHandler(JsonMappingException.class)
   public ResponseEntity<ApiResponse<ApiError>> handleJsonMappingException(JsonMappingException ex, HttpServletRequest req) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error("Malformed request", ApiError.builder()
@@ -75,7 +79,6 @@ public class GlobalExceptionHandler {
             .validationErrors(Map.of("error", ex.getMessage()))
             .build()));
   }
-
 
   @ExceptionHandler(ApiException.class)
   public ResponseEntity<ApiResponse<ApiError>> handleAPIException(
