@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import fr.diginamic.dto.ProjetDto;
+import fr.diginamic.projet.ProjetDto;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,10 +12,9 @@ import fr.diginamic.dto.ProjetDto;
 @Builder
 public class RessourceDto {
 
-    private Long id;
-    private String nom;
-    private String lien;
-    private String lienMedia;
-    private ProjetDto projet;
-
+  private Long id;
+  private String nom;
+  private String lien;
+  private String lienMedia;
+  private ProjetDto projet;
 }

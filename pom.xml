@@ -53,6 +53,13 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.13.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
@@ -100,13 +107,12 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.brevo/brevo -->
         <dependency>
             <groupId>com.brevo</groupId>
             <artifactId>brevo</artifactId>
             <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -130,6 +136,20 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 
@@ -166,6 +186,15 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+
+
     <profiles>
         <profile>
             <id>dev</id>
@@ -182,7 +211,9 @@
                 <jdbc.user>root</jdbc.user>
                 <jdbc.pass>pazo1928!</jdbc.pass>
                 <jdbc.dialect>org.hibernate.dialect.MariaDBDialect</jdbc.dialect>
-                <brevo.api-key>${env.BREVO_API_KEY}</brevo.api-key>
+                <!--suppress UnresolvedMavenProperty -->
+                <brevo.api-key>${BREVO_API_KEY}</brevo.api-key>
+
                 <spring.log-level>DEBUG</spring.log-level>
             </properties>
         </profile>
@@ -195,13 +226,15 @@
                 </property>
             </activation>
             <properties>
-                <jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
-                <jdbc.url>jdbc:mysql://${env.MYSQL_ADDON_HOST}:${env.MYSQL_ADDON_PORT}/${env.MYSQL_ADDON_DB}</jdbc.url>
-                <jdbc.user>${env.MYSQL_ADDON_USER}</jdbc.user>
-                <jdbc.pass>${env.MYSQL_ADDON_PASSWORD}</jdbc.pass>
-                <jdbc.dialect>org.hibernate.dialect.MySQLDialect</jdbc.dialect>
-                <brevo.api-key>${env.BREVO_API_KEY}</brevo.api-key>
-                <jdbc.connections.max.active>2</jdbc.connections.max.active>
+                <!--                <jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>-->
+                <!--                <jdbc.url>-->
+                <!--                    jdbc:mysql://${env.MYSQL_ADDON_HOST}:${env.MYSQL_ADDON_PORT}/${env.MYSQL_ADDON_DB}-->
+                <!--                </jdbc.url>-->
+                <!--                <jdbc.user>${env.MYSQL_ADDON_USER}</jdbc.user>-->
+                <!--                <jdbc.pass>${env.MYSQL_ADDON_PASSWORD}</jdbc.pass>-->
+                <!--                <jdbc.dialect>org.hibernate.dialect.MySQLDialect</jdbc.dialect>-->
+                <!--                <brevo.api-key>${BREVO_API_KEY}</brevo.api-key>-->
+                <!--                <jdbc.connections.max.active>2</jdbc.connections.max.active>-->
             </properties>
         </profile>
     </profiles>
