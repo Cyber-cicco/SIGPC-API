@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -41,6 +42,8 @@ public class UserStory {
 
     @Column(name = "fin_estime")
     private LocalDate finEstime;
+
+    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "userStory")
     private List<Tache> taches;

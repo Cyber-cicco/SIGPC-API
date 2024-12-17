@@ -27,6 +27,9 @@ public class UtilisateurTransformer {
         dto.setEmail(entity.getEmail());
         dto.setNom(entity.getNom());
         dto.setPrenom(entity.getPrenom());
+        if (entity.getActivationLink() != null){
+            dto.setActivationLink(entity.getActivationLink().toString());
+        }
         dto.setEmailVerified(entity.isEmailVerified());
         dto.setRoles(entity.getRoles());
         dto.setDateEcheanceSuppression(entity.getDateEcheanceSuppression());
