@@ -1,5 +1,6 @@
 package fr.diginamic.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -27,14 +28,14 @@ public class Tache {
     @Column(name = "done", nullable = false, columnDefinition = "boolean default false")
     private boolean done;
 
-    @Column(name = "date_debut", nullable = false)
-    private Date dateDebut;
+    @Column(name = "date_debut")
+    private LocalDate dateDebut;
 
-    @Column(name = "date_fin", nullable = true)
-    private Date dateFin;
+    @Column(name = "date_fin")
+    private LocalDate dateFin;
 
-    @Column(name = "fin_estime", nullable = true)
-    private Date finEstime;
+    @Column(name = "fin_estime")
+    private LocalDate finEstime;
 
     @ManyToOne
     @JoinColumn(name = "userStory_id")

@@ -28,7 +28,7 @@ public class EndDateAfterStartDateValidator
     LocalDate endDate = (LocalDate) new BeanWrapperImpl(obj).getPropertyValue(endDateField);
 
     boolean isValid = false;
-    if (endDate == null) isValid = true;
+    if (endDate == null || startDate == null) return true;
     else {
       if (endDate.isAfter(startDate)) isValid = true;
     }

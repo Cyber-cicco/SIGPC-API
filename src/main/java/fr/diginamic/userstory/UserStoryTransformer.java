@@ -1,7 +1,7 @@
-package fr.diginamic.dto;
+package fr.diginamic.userstory;
 
+import fr.diginamic.entities.enums.AvancementEnum;
 import fr.diginamic.projet.ProjetRepository;
-import fr.diginamic.repository.UserStoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.UserStory;
@@ -34,10 +34,14 @@ public class UserStoryTransformer {
         UserStory entity = new UserStory();
         entity.setId(dto.getId());
         entity.setLibelle(dto.getLibelle());
-        entity.setCode(projet.getNom() + " #" + (prevId.isPresent() ? prevId.get() : "1") );
+        entity.setCode(projet.getNom() + " #" + (prevId.isPresent() ? prevId.get() + 1 : "1") );
         entity.setDescription(dto.getDescription());
         entity.setDateDebut(dto.getDateDebut());
-        entity.setAvancement(dto.getAvancement());
+        if (dto.getAvancement() != null) {
+            entity.setAvancement(dto.getAvancement());
+        } else {
+            entity.setAvancement(AvancementEnum.TODO);
+        }
         entity.setDateFin(dto.getDateFin());
         entity.setProjet(projet);
 

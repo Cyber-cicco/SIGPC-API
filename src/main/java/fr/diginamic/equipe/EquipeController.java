@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import static fr.diginamic.config.Constants.API_VERSION_1;
+import static fr.diginamic.config.Constants.AUTH_TOKEN;
+import static fr.diginamic.shared.ResponseUtil.success;
+import static fr.diginamic.shared.ResponseUtil.error;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,16 +51,16 @@ public class EquipeController {
      * @return un message indiquant la réussite de l'opération
      */
     @PostMapping("/{groupId}/invite")
-    public ResponseEntity<?> postInvitation(@CookieValue("AUTH-TOKEN") String token, @PathVariable("groupId") Long groupId, @RequestBody @Valid SimpleInvitationDto invitationDto) {
+    public ResponseEntity<?> postInvitation(@CookieValue(AUTH_TOKEN) String token, @PathVariable("groupId") Long groupId, @RequestBody @Valid SimpleInvitationDto invitationDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
         equipeService.postInvite(invitationDto, groupId, userInfos);
         try {
             mailService.sendInvitation(invitationDto);
-            return ResponseEntity.ok(Map.of("message", "invite sent"));
+            return ResponseEntity.ok(success("L'invitation a été envoyée"));
         } catch (ApiException e) {
             equipeService.removeInvite(invitationDto, groupId);
-            return ResponseEntity.ok(Map.of("message", "L'invitation n'a pas aboutis à cause d'un problème lié à l'envoie de mail."));
+            return ResponseEntity.ok(error("L'invitation n'a pas pu être envoyé :'(", null));
         }
     }
 
@@ -70,13 +73,13 @@ public class EquipeController {
      */
     @PatchMapping("/{groupId}/invite/member/{accepted}")
     public ResponseEntity<?> accepteInvitation(
-            @CookieValue("AUTH-TOKEN") String token,
+            @CookieValue(AUTH_TOKEN) String token,
             @PathVariable Long groupId,
             @PathVariable Boolean accepted
             ) {
         var userInfos = securityService.getAuthenticationInfos(token);
         equipeService.accepteInvite(userInfos, groupId, accepted);
-        return ResponseEntity.ok(Map.of("message", accepted ?
+        return ResponseEntity.ok(success(accepted ?
                 "Vous avez bien été ajouté dans le groupe"
                 :
                 "L'invitation a correctement été refusée"));
@@ -92,11 +95,11 @@ public class EquipeController {
      * @return le rôle
      */
     @PatchMapping("/{groupId}/member/{memberId}/role")
-    public ResponseEntity<?> changeRoleOfMember(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody @Valid RoleEquipeDto roleEquipeDto) {
+    public ResponseEntity<?> changeRoleOfMember(@CookieValue(AUTH_TOKEN) String token, @PathVariable Long groupId, @PathVariable Long memberId, @RequestBody @Valid RoleEquipeDto roleEquipeDto) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
         var utilisateurEquipe = equipeService.changeRole(memberId, groupId, roleEquipeDto);
-        return ResponseEntity.ok(new RoleEquipeDto(utilisateurEquipe.getRole()));
+        return ResponseEntity.ok(success("Le groupe de l'utilisateur a bien été modifié.",  new RoleEquipeDto(utilisateurEquipe.getRole())));
     }
 
     /**
@@ -107,11 +110,11 @@ public class EquipeController {
      * @throws ApiException si le mail n'a pas pu être envoyé
      */
     @PostMapping("/{groupId}/join")
-    public ResponseEntity<?> askToJoinGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId) throws ApiException {
+    public ResponseEntity<?> askToJoinGroup(@CookieValue(AUTH_TOKEN) String token, @PathVariable Long groupId) throws ApiException {
         var userInfos = securityService.getAuthenticationInfos(token);
         var emails = equipeService.addJoinGroupDemand(userInfos, groupId);
         mailService.sendDemandeAppartenance(emails.senderEmail(), emails.recipientEmail());
-        return ResponseEntity.ok(Map.of("message", "La demande a été envoyée"));
+        return ResponseEntity.ok(success("La demande a été envoyée."));
     }
 
     /**
@@ -121,11 +124,11 @@ public class EquipeController {
      * @return une réponse indiquant que l'on a bien quitté le groupe
      */
     @PatchMapping("/{groupId}/leave")
-    public ResponseEntity<?> leaveGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId) {
+    public ResponseEntity<?> leaveGroup(@CookieValue(AUTH_TOKEN) String token, @PathVariable Long groupId) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserAllowedInGroup(userInfos.getId(), groupId);
         equipeService.leaveGroup(userInfos.getId(), groupId);
-        return ResponseEntity.ok(Map.of("message", "Vous avez bien quitter le groupe"));
+        return ResponseEntity.ok(success("Vous avez bien quitté le groupe"));
     }
 
     /**
@@ -136,7 +139,7 @@ public class EquipeController {
      * @return une réponse indiquant la suppression de l'utilisateur
      */
     @DeleteMapping("/{groupId}/member/{memberId}")
-    public ResponseEntity<?> removeFromGroup(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long memberId, @PathVariable Long groupId) {
+    public ResponseEntity<?> removeFromGroup(@CookieValue(AUTH_TOKEN) String token, @PathVariable Long memberId, @PathVariable Long groupId) {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
         securityService.checkIfUserAllowedInGroup(memberId, groupId);
@@ -144,7 +147,7 @@ public class EquipeController {
             throw new ValidationException("Vous ne pouvez vous supprimer vous-même. Utiliser l'option pour partir du groupe");
         }
         equipeService.leaveGroup(memberId, groupId);
-        return ResponseEntity.ok(Map.of("message", "Vous avez bien supprimé l'utilisateur du groupe"));
+        return ResponseEntity.ok(success("L'utilisateur a été supprimé du groupe."));
     }
 
     /**
@@ -156,12 +159,12 @@ public class EquipeController {
      * @return un message retournant le status d'acceptation de la demande
      */
     @PatchMapping("/{groupId}/join-request/member/{memberId}/{accepted}")
-    public ResponseEntity<?> acceptJoinDemand(@CookieValue("AUTH-TOKEN") String token, @PathVariable Long groupId, @PathVariable Long memberId, @PathVariable Boolean accepted) throws ApiException {
+    public ResponseEntity<?> acceptJoinDemand(@CookieValue(AUTH_TOKEN) String token, @PathVariable Long groupId, @PathVariable Long memberId, @PathVariable Boolean accepted) throws ApiException {
         var userInfos = securityService.getAuthenticationInfos(token);
         securityService.checkIfUserProprietaireInGroup(userInfos.getId(), groupId);
         var email = equipeService.accepteJoinDemand(memberId, groupId, accepted);
         mailService.sendAcceptJoin(email, accepted);
-        return ResponseEntity.ok(Map.of("message", accepted ? "Vous avez bien accepté la demande" : "Vous avez bien refusé la demande"));
+        return ResponseEntity.ok(success(accepted ? "Vous avez bien accepté la demande" : "Vous avez bien refusé la demande"));
     }
 
 }
