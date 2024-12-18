@@ -53,7 +53,7 @@ public class SprintService {
     }
 
     private boolean isCapacitySufficient(SprintDto sprintDto) {
-        // Implémentez la logique pour vérifier la capacité de l'équipe
+        // TODO : ajouter la logique pour vérifier la capacité de l'équipe
         return true;
     }
 }
