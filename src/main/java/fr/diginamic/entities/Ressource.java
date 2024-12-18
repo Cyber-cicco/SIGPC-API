@@ -16,8 +16,13 @@ public class Ressource {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(length = 255, nullable = true)
   private String nom;
+
+  @Column(length = 255, nullable = true)
   private String lien;
+
+  @Column(length = 255, nullable = true)
   private String lienMedia;
 
   @ManyToOne
