@@ -1,9 +1,7 @@
 package fr.diginamic.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Map;
@@ -11,9 +9,12 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiError {
   /** Timestamp de l'erreur */
+  @Builder.Default
   private long timestamp = new Date().getTime();
 
   /** Message d'erreur */

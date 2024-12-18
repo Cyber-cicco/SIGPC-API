@@ -1,5 +1,6 @@
 package fr.diginamic.dto;
 
+import fr.diginamic.utilisateur.UtilisateurDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -69,7 +69,7 @@ public class JwtService {
                     .addClaims(Map.of("role",  objectMapper.writeValueAsString(obj.toList()
                     )))
                     .addClaims(Map.of("id", user.getId()))
-                    .setExpiration(new Date(System.currentTimeMillis() + getExpireIn() * 1000))
+                    .setExpiration(new Date(System.currentTimeMillis() + getExpireIn()))
                     .signWith(
                             getSecretKey()
                     ).compact();
@@ -78,7 +78,7 @@ public class JwtService {
         }
         ResponseCookie tokenCookie = ResponseCookie.from(getCookie(), jetonJWT)
                 .httpOnly(false)
-                .maxAge(getExpireIn() * 1000)
+                .maxAge(getExpireIn())
                 .path("/")
                 .sameSite("Lax")
                 .build();

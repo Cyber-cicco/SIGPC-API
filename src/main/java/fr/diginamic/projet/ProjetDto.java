@@ -2,18 +2,11 @@ package fr.diginamic.projet;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import fr.diginamic.dto.CommentaireDto;
-import fr.diginamic.dto.EquipeDto;
-import fr.diginamic.dto.EvenementDto;
-import fr.diginamic.dto.ProjetUtilisateurDto;
-import fr.diginamic.dto.RessourceDto;
-import fr.diginamic.dto.SprintDto;
 import fr.diginamic.validation.annotations.CustomLocalDate;
 import fr.diginamic.validation.annotations.EndDateAfterStartDate;
 import fr.diginamic.validation.deserializers.LocalDateDeserializer;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
 import lombok.*;
 
 @AllArgsConstructor
@@ -59,16 +52,11 @@ public class ProjetDto {
   @CustomLocalDate
   private LocalDate dateFinEstimee;
 
+  private Long equipeId;
+
   @NotNull(message = "L'email de contact est requis")
   @Email(message = "Le contact doit être un e-mail valide")
   private String contact;
-
-  private List<CommentaireDto> commentaires;
-  private EquipeDto equipe;
-  private List<EvenementDto> evenements;
-  private List<SprintDto> sprint;
-  private List<RessourceDto> ressources;
-  private List<ProjetUtilisateurDto> projetUtilisateurs;
 
   @Override
   public String toString() {

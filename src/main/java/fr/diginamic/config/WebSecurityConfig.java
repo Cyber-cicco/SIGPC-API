@@ -27,11 +27,14 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  /** Permet de gérer la suppression du cookie lorsque l'utilisateur se déconnecte */
+  /**
+   * Permet de gérer la suppression du cookie lorsque l'utilisateur se déconnecte
+   */
   private final CustomLogoutHandler customLogoutHandler;
 
   /**
-   * Bean permettant de hasher le mot de passe dans les services d'authentification
+   * Bean permettant de hasher le mot de passe dans les services
+   * d'authentification
    *
    * @return le bean
    */
@@ -43,11 +46,13 @@ public class WebSecurityConfig {
   /**
    * Configure la sécurité pour l'application
    *
-   * @param http outil permettant de configurer les middlewares
-   * @param jwtAuthenticationFilter middleware custom permettant de créer une session à partir du
-   *     cookie jwt
-   * @param mvc utilitaire permettant de gérer le matching des routes
-   * @param configurationSource bean permettant de gérer les CORS
+   * @param http                    outil permettant de configurer les middlewares
+   * @param jwtAuthenticationFilter middleware custom permettant de créer une
+   *                                session à partir du
+   *                                cookie jwt
+   * @param mvc                     utilitaire permettant de gérer le matching des
+   *                                routes
+   * @param configurationSource     bean permettant de gérer les CORS
    * @return la filter chain
    * @throws Exception
    */
@@ -58,42 +63,28 @@ public class WebSecurityConfig {
       MvcRequestMatcher.Builder mvc,
       @Qualifier(value = "corsConfigurationSource") CorsConfigurationSource configurationSource)
       throws Exception {
-    http.authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers(mvc.pattern("api/v1/auth/compte"))
-                    .permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/login"))
-                    .permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**"))
-                    .permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request"))
-                    .permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/auth/password/change/**"))
-                    .permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/projets/**"))
-                    .permitAll()
-                    .requestMatchers("/error")
-                    .permitAll()
-                    .requestMatchers(mvc.pattern("api/v1/equipes/**"))
-                    .authenticated()
-                    .requestMatchers(mvc.pattern("api/v1/equipes"))
-                    .authenticated()
-                    .requestMatchers(mvc.pattern("api/v1/user-stories"))
-                    .authenticated())
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(mvc.pattern("api/v1/auth/compte")).permitAll()
+            .requestMatchers(mvc.pattern("api/v1/auth/login")).permitAll()
+            .requestMatchers(mvc.pattern("api/v1/auth/email/verify/**")).permitAll()
+            .requestMatchers(mvc.pattern("api/v1/auth/password-change/send-request")).permitAll()
+            .requestMatchers(mvc.pattern("api/v1/auth/password/change/**")).permitAll()
+            .requestMatchers("/error").permitAll()
+            .anyRequest().authenticated())
         .csrf(AbstractHttpConfigurer::disable)
         .cors(
-            httpSecurityCorsConfigurer ->
-                httpSecurityCorsConfigurer.configurationSource(configurationSource))
+            httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(configurationSource))
         .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
         .logout(
-            logoutConfigurer ->
-                logoutConfigurer.addLogoutHandler(customLogoutHandler).logoutUrl("/logout"))
+            logoutConfigurer -> logoutConfigurer.addLogoutHandler(customLogoutHandler).logoutUrl("/logout"))
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
   /**
-   * Configure les CORS pour accepter les requêtes depuis localhost TODO: Changer cela si l'on
+   * Configure les CORS pour accepter les requêtes depuis localhost TODO: Changer
+   * cela si l'on
    * souhaite ajouter un front
    *
    * @return
@@ -114,7 +105,8 @@ public class WebSecurityConfig {
   /**
    * Permet de gérer le matching des routes et de les sécuriser
    *
-   * @param introspector object contenant des informations sur les routes de l'application
+   * @param introspector object contenant des informations sur les routes de
+   *                     l'application
    * @return
    */
   @Scope("prototype")

@@ -1,9 +1,12 @@
 package fr.diginamic.services;
 
 import fr.diginamic.config.JwtService;
+import fr.diginamic.entities.ProjetUtilisateur;
 import fr.diginamic.entities.enums.EquipeRoleEnum;
+import fr.diginamic.entities.enums.ProjetRoleEnum;
 import fr.diginamic.exception.UnauthorizedException;
-import fr.diginamic.repository.EquipeUtilisateurRepository;
+import fr.diginamic.equipe.EquipeUtilisateurRepository;
+import fr.diginamic.projet.ProjetUtilisateurRepository;
 import fr.diginamic.shared.AuthenticationInfos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ public class SecurityService {
 
     private final JwtService jwtService;
     private final EquipeUtilisateurRepository equipeUtilisateurRepository;
+    private final ProjetUtilisateurRepository projetUtilisateurRepository;
     public AuthenticationInfos getAuthenticationInfos(String token){
         var claims = jwtService.extractAllClaims(token);
         return AuthenticationInfos.builder()
@@ -37,8 +41,19 @@ public class SecurityService {
      * @param groupId l'indentifiant du groupe auquel il est rattaché
      */
     public void checkIfUserProprietaireInGroup(Long userId, Long groupId) {
-        var exists = equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_IdAndRole(userId, groupId, EquipeRoleEnum.PROPRIETAIRE);
-        if (!exists) {
+        if (equipeUtilisateurRepository.existsByUtilisateur_IdAndEquipe_IdAndRole(userId, groupId, EquipeRoleEnum.PROPRIETAIRE)) {
+            throw new UnauthorizedException();
+        }
+    }
+
+    public ProjetUtilisateur checkIfUserMemberOfProject(Long userId, Long projectId) {
+        var projetUtilisateur = projetUtilisateurRepository.findByUtilisateur_IdAndProjet_Id(userId, projectId)
+                .orElseThrow(UnauthorizedException::new);
+        return projetUtilisateur;
+    }
+
+    public void shouldNotBeVisiteurOfProject(ProjetUtilisateur projetUtilisateur) {
+        if (projetUtilisateur.getRole().equals(ProjetRoleEnum.VISITEUR)) {
             throw new UnauthorizedException();
         }
     }

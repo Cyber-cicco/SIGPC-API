@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjetRepository extends JpaRepository<Projet, Long> {
-  Projet findByNom(
+  Boolean existsByNom(
       @NotBlank
           @Size(min = 5, message = "Le nom du projet doit " + "contenir au moins 5 caractères")
           String nom);

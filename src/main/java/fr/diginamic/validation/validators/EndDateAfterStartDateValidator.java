@@ -17,7 +17,6 @@ public class EndDateAfterStartDateValidator
   @Override
   public void initialize(EndDateAfterStartDate constraintAnnotation) {
     ConstraintValidator.super.initialize(constraintAnnotation);
-    //    this.localDateFormat = constraintAnnotation.localDateFormat();
     this.startDateField = constraintAnnotation.startDateField();
     this.endDateField = constraintAnnotation.endDateField();
     this.message = constraintAnnotation.message();
@@ -28,16 +27,11 @@ public class EndDateAfterStartDateValidator
     LocalDate startDate = (LocalDate) new BeanWrapperImpl(obj).getPropertyValue(startDateField);
     LocalDate endDate = (LocalDate) new BeanWrapperImpl(obj).getPropertyValue(endDateField);
 
-    System.out.println("startDate = " + startDate);
-    System.out.println("endDate = " + endDate);
-
     boolean isValid = false;
-    if (endDate == null) isValid = true;
+    if (endDate == null || startDate == null) return true;
     else {
       if (endDate.isAfter(startDate)) isValid = true;
     }
-
-    System.out.println("isValid = " + isValid);
 
     if (!isValid) {
       context.disableDefaultConstraintViolation();

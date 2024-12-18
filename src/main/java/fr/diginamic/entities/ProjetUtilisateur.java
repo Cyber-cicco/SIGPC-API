@@ -1,5 +1,6 @@
 package fr.diginamic.entities;
 
+import fr.diginamic.entities.enums.ProjetRoleEnum;
 import fr.diginamic.projet.Projet;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +17,8 @@ public class ProjetUtilisateur {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String role;
+  @Enumerated(EnumType.STRING)
+  private ProjetRoleEnum role;
 
   @ManyToOne
   @JoinColumn(name = "utilisateur_id")
