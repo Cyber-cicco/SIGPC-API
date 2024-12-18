@@ -1,8 +1,9 @@
-package fr.diginamic.dto;
+package fr.diginamic.tache;
 
+import fr.diginamic.tache.TacheDto;
 import org.springframework.stereotype.Component;
 import fr.diginamic.entities.Tache;
-import fr.diginamic.repository.UserStoryRepository;
+import fr.diginamic.userstory.UserStoryRepository;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -20,8 +21,6 @@ public class TacheTransformer {
         dto.setDateDebut(entity.getDateDebut());
         dto.setDateFin(entity.getDateFin());
         dto.setFinEstime(entity.getFinEstime());
-
-        // TODO : implémenter les méthodes pour les champs complexes
         return dto;
     }
 
@@ -36,7 +35,6 @@ public class TacheTransformer {
         entity.setFinEstime(dto.getFinEstime());
         entity.setUserStory(userStoryRepository.getReferenceById(dto.getUserStoryId()));
 
-        // TODO : implémenter les méthodes pour les champs complexes
         return entity;
     }
 }

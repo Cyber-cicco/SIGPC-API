@@ -1,15 +1,11 @@
-package fr.diginamic.services;
+package fr.diginamic.userstory;
 
-import fr.diginamic.projet.Projet;
 import fr.diginamic.projet.ProjetRepository;
-import fr.diginamic.repository.TacheRepository;
+import fr.diginamic.tache.TacheRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import fr.diginamic.dto.UserStoryDto;
-import fr.diginamic.dto.UserStoryTransformer;
 import fr.diginamic.entities.UserStory;
-import fr.diginamic.repository.UserStoryRepository;
 
 import java.time.LocalDateTime;
 
@@ -37,5 +33,15 @@ public class UserStoryService {
     public void remove(UserStory userStory) {
         userStory.setDeletedAt(LocalDateTime.now());
         userStoryRepository.save(userStory);
+    }
+
+    public UserStory change(UserStory userStory, UserStoryDto userStoryDto) {
+        userStory.setLibelle(userStoryDto.getLibelle());
+        userStory.setDescription(userStoryDto.getDescription());
+        userStory.setAvancement(userStoryDto.getAvancement());
+        userStory.setDateDebut(userStoryDto.getDateDebut());
+        userStory.setFinEstime(userStoryDto.getFinEstime());
+        userStory.setDateFin(userStoryDto.getDateFin());
+        return userStoryRepository.save(userStory);
     }
 }

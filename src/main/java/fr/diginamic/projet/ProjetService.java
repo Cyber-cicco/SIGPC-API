@@ -6,8 +6,7 @@ import fr.diginamic.equipe.EquipeRepository;
 import fr.diginamic.exception.ResourceNotFoundException;
 import java.util.List;
 
-import fr.diginamic.repository.ProjetUtilisateurRepository;
-import fr.diginamic.repository.UtilisateurRepository;
+import fr.diginamic.utilisateur.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
