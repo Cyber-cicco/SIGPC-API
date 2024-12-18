@@ -1,0 +1,1166 @@
+{
+	"info": {
+		"_postman_id": "f57546c1-0e40-451c-9e49-853fd9aa21bc",
+		"name": "SIGPC-API-Projets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14844494"
+	},
+	"item": [
+		{
+			"name": "Projets",
+			"item": [
+				{
+					"name": "Get",
+					"item": []
+				},
+				{
+					"name": "Post",
+					"item": [
+						{
+							"name": "Validation",
+							"item": [
+								{
+									"name": "PR01.1 Créer projet avec nom NULL",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": null,\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR01.2 Créer projet sans nom",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR02.1 Créer projet avec nom vide",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"\",\n  \"description\": \"Description projet BIP test 2\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_bip_test2@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR02.2 Créer projet avec nom blank",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"   \",\n  \"description\": \"Description projet BIP test 2\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_bip_test2@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR03 Créer projet avec nom < 5 caractères",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Abcd\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR04 Créer projet avec nom > 100 caractères",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"AbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvwxyzAbcdefghijklmnopqrstuvw\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR06.1 Créer projet avec nom existant 1",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet 1 - SIG\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR06.2 Créer projet avec nom existant et date invalide",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet 1 - SIG\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-30\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR10 Créer projet sans date début",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR11.1 Créer projet avec date début invalide 1",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-30\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR11.2 Créer projet avec date début invalide 2",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-04-31\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR11.3 Créer projet avec date début invalide 3",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-00-11\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR11.4 Créer projet avec format de date début invalide 1",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024?00$1\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR11.5 Créer projet avec format de date début invalide 2",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"format-date-invalide\",\n  \"contact\": \"contact_test@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR12.1 Créer projet sans email de contact",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-02\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR12.2 Créer projet avec contact invalide",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet Test\",\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-01-02\",\n  \"contact\": \"ceci n'est pas un mail\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR15 Créer projet avec plusieurs erreurs",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": null,\n  \"description\": \"Description projet test\",\n  \"dateDebut\": \"2024-02-29\",\n  \"dateFin\": \"2024-01-25\",\n  \"dateFinEstimee\": \"2024-01-20\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "PR19.1 Créer projet valide 1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nom\": \"Projet SIG Test 1\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{domainName}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{apiVersion}}",
+										"projets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PR19.2 Créer projet valide 2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nom\": \"Projet BIP\",\n  \"description\": \"Description projet BIP\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_bip@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{domainName}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{apiVersion}}",
+										"projets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PR19.3 Créer projet valide à supprimer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nom\": \"Projet à supprimer 1\",\n  \"description\": \"Description projet SUPPR\",\n  \"dateDebut\": \"2024-02-02\",\n  \"contact\": \"contact_supprime@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{domainName}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{apiVersion}}",
+										"projets"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Put",
+					"item": [
+						{
+							"name": "Validation",
+							"item": [
+								{
+									"name": "PR30.1 Update projet avec nom null",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": null,\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.2 Update projet avec nom vide",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.3 Update projet avec nom < 5 caractères",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"abcd\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.4 Update projet avec date début null",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": null,\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.5 Update projet avec date début invalide",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-00-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.6 Update projet avec date fin invalide",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-10-05\",\n  \"dateFin\": \"invalide\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.7 Update projet avec date fin < date début",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-10-05\",\n  \"dateFin\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.8 Update projet avec date fin estimée invalide",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-10-05\",\n  \"dateFinEstimee\": \"invalide\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.9 Update projet avec date fin estimée < date début",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-10-05\",\n  \"dateFinEstimee\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.10 Update projet sans contact",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-10-05\",\n  \"dateFinEstimee\": \"2023-04-05\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.11 Update projet avec contact null",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-03-05\",\n  \"dateFinEstimee\": \"2023-11-05\",\n  \"contact\": null\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.12 Update projet avec contact invalide",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": \"Projet mis à jour\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-01\",\n  \"dateFinEstimee\": \"2023-07-01\",\n  \"contact\": \"mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "PR30.20 Update projet avec plusieurs erreurs",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"nom\": null,\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-01\",\n  \"dateFin\": \"2023-03-15\",\n  \"dateFinEstimee\": \"2023-03-20\",\n  \"contact\": \"mail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+											"protocol": "{{schema}}",
+											"host": [
+												"{{domainName}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{apiVersion}}",
+												"projets",
+												"5"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "PR31.1 Update projet 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nom\": \"Update Projet SIG Test 1\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{domainName}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{apiVersion}}",
+										"projets",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PR31.2 Update projet 2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nom\": \"Update Projet SIG Test 1\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_sig_test1@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{domainName}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{apiVersion}}",
+										"projets",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PR31.3 Update projet 1 Test",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nom\": \"Projet Voiture\",\n  \"description\": \"Description projet SIG test 1\",\n  \"dateDebut\": \"2023-04-05\",\n  \"contact\": \"contact_voiture@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{domainName}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{apiVersion}}",
+										"projets",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Projet by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{domainName}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{apiVersion}}",
+								"projets",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tous les projets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{domainName}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{apiVersion}}",
+								"projets"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "PR40.1 Supprimer projet by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{domainName}}:{{port}}/{{apiVersion}}/projets/5",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{domainName}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{apiVersion}}",
+								"projets",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
