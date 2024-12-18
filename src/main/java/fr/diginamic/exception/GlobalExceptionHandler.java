@@ -47,7 +47,8 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiResponse<ApiError>> handleResourceNotFoundException(
       ResourceNotFoundException ex, HttpServletRequest request) {
     String message = ex.getMessage();
-    ApiError apiError = new ApiError(request.getMethod(), message, request.getMethod());
+    ApiError apiError =
+        new ApiError(request.getMethod(), "Ressource non trouvée", request.getServletPath());
     ApiResponse<ApiError> apiResponse = error(message, apiError);
     return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
   }

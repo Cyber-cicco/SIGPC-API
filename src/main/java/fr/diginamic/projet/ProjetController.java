@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Validated
-// @Validated(value = NullEmptyBlankSequence.class)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_VERSION_1 + "/projets")
@@ -44,5 +43,25 @@ public class ProjetController {
     ProjetDto createdProjetDto = projetService.createProjet(projetDto);
     ApiResponse<ProjetDto> apiResponse = success("Projet créé", createdProjetDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+  }
+
+  @PutMapping("/{idProjet}")
+  public ResponseEntity<ApiResponse<ProjetDto>> updateProjet(
+      @PathVariable Long idProjet, @Valid @RequestBody ProjetDto projetUpdateDto) {
+    ProjetDto updatedProjetDto = projetService.updateProjet(idProjet, projetUpdateDto);
+    ApiResponse<ProjetDto> apiResponse = success("Projet mis à jour avec succès", updatedProjetDto);
+    return ResponseEntity.ok().body(apiResponse);
+  }
+
+  //  @PatchMapping
+  //  public ResponseEntity<ApiResponse<ProjetDto>> updatePartialProjet(
+  //      @PathVariable Long idProjet, @Valid @RequestBody ProjetDto projetDto) {}
+
+  @DeleteMapping("/{idProjet}")
+  public ResponseEntity<ApiResponse<ProjetDto>> deleteProjet(@PathVariable Long idProjet) {
+    ProjetDto projetInDb = projetService.deleteProjet(idProjet);
+    ApiResponse<ProjetDto> apiResponse =
+        success("Projet avec id:" + idProjet + " supprimé", projetInDb);
+    return ResponseEntity.ok().body(apiResponse);
   }
 }
