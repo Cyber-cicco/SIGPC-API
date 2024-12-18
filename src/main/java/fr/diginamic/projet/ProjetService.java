@@ -4,9 +4,8 @@ import fr.diginamic.entities.ProjetUtilisateur;
 import fr.diginamic.entities.enums.ProjetRoleEnum;
 import fr.diginamic.equipe.EquipeRepository;
 import fr.diginamic.exception.ResourceNotFoundException;
-import java.util.List;
-
 import fr.diginamic.utilisateur.UtilisateurRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -47,13 +46,14 @@ public class ProjetService implements ProjetServiceInterface {
       projet.setEquipe(equipe);
     }
     projet.setAdmin(utilisateur);
-    projetUtilisateurRepository.save(ProjetUtilisateur.builder()
+    projetUtilisateurRepository.save(
+        ProjetUtilisateur.builder()
             .projet(projet)
             .utilisateur(utilisateur)
             .role(ProjetRoleEnum.MEMBRE)
             .build());
     return modelMapper.map(projetRepository.save(projet), ProjetDto.class);
-  
+  }
 
   public ProjetDto updateProjet(Long projetId, ProjetDto updateDto) {
     Projet projetInDb =
@@ -85,6 +85,5 @@ public class ProjetService implements ProjetServiceInterface {
     ProjetDto deleted = modelMapper.map(projetInDb, ProjetDto.class);
     projetRepository.delete(projetInDb);
     return deleted;
-
   }
 }
