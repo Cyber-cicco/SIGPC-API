@@ -19,6 +19,18 @@ public class RessourceController {
 
     private final RessourceService ressourceService;
 
+    /**
+     * Ajouter une ressource
+     * 
+     * Informations à mettre dans le body :
+     * - projetId
+     * - nom (optionnel)
+     * - lien (optionnel)
+     * - lienMedia (optionnel)
+     * 
+     * @param ressourceDto
+     * @return
+     */
     @PostMapping("/ajout")
     public ResponseEntity<RessourceDto> ajoutRessource(@RequestBody RessourceDto ressourceDto) {
         if (ressourceDto.getProjetId() == null) {
@@ -27,4 +39,19 @@ public class RessourceController {
         RessourceDto createdRessource = ressourceService.ajoutRessource(ressourceDto);
         return ResponseEntity.ok(createdRessource);
     }
+
+    /**
+     * Supprimer une ressource
+     * 
+     * Informations à mettre dans le body :
+     * 
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/supprimer/{id}")
+    public ResponseEntity<Void> supprimerRessource(@PathVariable Long id) {
+        ressourceService.supprimerRessource(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

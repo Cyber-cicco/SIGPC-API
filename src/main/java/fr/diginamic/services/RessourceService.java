@@ -37,4 +37,11 @@ public class RessourceService {
                 savedRessource.getLienMedia(), savedRessource.getProjet().getId());
     }
 
+    public void supprimerRessource(Long id) {
+        if (!ressourceRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "La ressource n'existe pas");
+        }
+        ressourceRepository.deleteById(id);
+    }
+
 }
