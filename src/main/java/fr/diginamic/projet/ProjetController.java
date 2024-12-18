@@ -53,10 +53,6 @@ public class ProjetController {
     return ResponseEntity.ok().body(apiResponse);
   }
 
-  //  @PatchMapping
-  //  public ResponseEntity<ApiResponse<ProjetDto>> updatePartialProjet(
-  //      @PathVariable Long idProjet, @Valid @RequestBody ProjetDto projetDto) {}
-
   @DeleteMapping("/{idProjet}")
   public ResponseEntity<ApiResponse<ProjetDto>> deleteProjet(@PathVariable Long idProjet) {
     ProjetDto projetInDb = projetService.deleteProjet(idProjet);
