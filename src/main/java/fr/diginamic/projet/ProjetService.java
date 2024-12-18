@@ -25,16 +25,14 @@ public class ProjetService implements ProjetServiceInterface {
   public List<ProjetDto> getAllProjets() {
     List<Projet> projetsDansDb = projetRepository.findAll();
     List<ProjetDto> projetsDtos;
-    projetsDtos =
-        projetsDansDb.stream().map(projet -> modelMapper.map(projet, ProjetDto.class)).toList();
+    projetsDtos = projetsDansDb.stream().map(projet -> modelMapper.map(projet, ProjetDto.class)).toList();
     return projetsDtos;
   }
 
   public ProjetDto getProjetById(Long projetId) {
-    Projet projetDansDb =
-        projetRepository
-            .findById(projetId)
-            .orElseThrow(() -> new ResourceNotFoundException("Projet", "id", projetId));
+    Projet projetDansDb = projetRepository
+        .findById(projetId)
+        .orElseThrow(() -> new ResourceNotFoundException("Projet", "id", projetId));
     return modelMapper.map(projetDansDb, ProjetDto.class);
   }
 
@@ -46,20 +44,21 @@ public class ProjetService implements ProjetServiceInterface {
       projet.setEquipe(equipe);
     }
     projet.setAdmin(utilisateur);
+    
     projetUtilisateurRepository.save(
         ProjetUtilisateur.builder()
             .projet(projet)
             .utilisateur(utilisateur)
             .role(ProjetRoleEnum.MEMBRE)
             .build());
+
     return modelMapper.map(projetRepository.save(projet), ProjetDto.class);
   }
 
   public ProjetDto updateProjet(Long projetId, ProjetDto updateDto) {
-    Projet projetInDb =
-        projetRepository
-            .findById(projetId)
-            .orElseThrow(() -> new ResourceNotFoundException("Projet", "id", projetId));
+    Projet projetInDb = projetRepository
+        .findById(projetId)
+        .orElseThrow(() -> new ResourceNotFoundException("Projet", "id", projetId));
 
     ProjetDto projetDtoDansDb = modelMapper.map(projetInDb, ProjetDto.class);
     log.info("savedProjet: {}", projetDtoDansDb.toString());
@@ -77,10 +76,9 @@ public class ProjetService implements ProjetServiceInterface {
   }
 
   public ProjetDto deleteProjet(Long projetId) {
-    Projet projetInDb =
-        projetRepository
-            .findById(projetId)
-            .orElseThrow(() -> new ResourceNotFoundException("Projet", "id", projetId));
+    Projet projetInDb = projetRepository
+        .findById(projetId)
+        .orElseThrow(() -> new ResourceNotFoundException("Projet", "id", projetId));
 
     ProjetDto deleted = modelMapper.map(projetInDb, ProjetDto.class);
     projetRepository.delete(projetInDb);
