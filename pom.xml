@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -95,11 +96,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-test</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.security</groupId>-->
+        <!--            <artifactId>spring-security-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
         <dependency>
             <groupId>jakarta.validation</groupId>
@@ -195,7 +196,7 @@
                 <jdbc.user>root</jdbc.user>
                 <jdbc.pass>pazo1928!</jdbc.pass>
                 <jdbc.dialect>org.hibernate.dialect.MariaDBDialect</jdbc.dialect>
-                <brevo.api-key>${env.BREVO_API_KEY}</brevo.api-key>
+                <brevo.api-key>${BREVO_API_KEY}</brevo.api-key>
                 <spring.log-level>DEBUG</spring.log-level>
             </properties>
         </profile>
@@ -209,11 +210,13 @@
             </activation>
             <properties>
                 <jdbc.driver>com.mysql.cj.jdbc.Driver</jdbc.driver>
-                <jdbc.url>jdbc:mysql://${env.MYSQL_ADDON_HOST}:${env.MYSQL_ADDON_PORT}/${env.MYSQL_ADDON_DB}</jdbc.url>
+                <jdbc.url>
+                    jdbc:mysql://${env.MYSQL_ADDON_HOST}:${env.MYSQL_ADDON_PORT}/${env.MYSQL_ADDON_DB}
+                </jdbc.url>
                 <jdbc.user>${env.MYSQL_ADDON_USER}</jdbc.user>
                 <jdbc.pass>${env.MYSQL_ADDON_PASSWORD}</jdbc.pass>
                 <jdbc.dialect>org.hibernate.dialect.MySQLDialect</jdbc.dialect>
-                <brevo.api-key>${env.BREVO_API_KEY}</brevo.api-key>
+                <brevo.api-key>${BREVO_API_KEY}</brevo.api-key>
                 <jdbc.connections.max.active>2</jdbc.connections.max.active>
             </properties>
         </profile>

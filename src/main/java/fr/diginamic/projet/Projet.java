@@ -26,11 +26,7 @@ public class Projet {
 
   /** Nom du projet */
   @Column(length = 100, nullable = false, unique = true)
-  //  @Column(length = 100, unique = true)
   @NotNull(message = "Le nom du projet est requis - ENTITÉ")
-  //  @NotEmpty(message = "Le nom du projet est requis")
-  //  @Size(min = 5, max = 100, message = "Le nom doit avoir minimum 5 et maximum 100 " +
-  // "caractères")
   private String nom;
 
   /** Description du projet */
@@ -84,6 +80,6 @@ public class Projet {
   @JoinColumn(name = "admin_id")
   private Utilisateur admin;
 
-  @OneToMany(mappedBy = "projet")
+  @OneToMany(mappedBy = "projet", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ProjetUtilisateur> projetUtilisateurs;
 }
